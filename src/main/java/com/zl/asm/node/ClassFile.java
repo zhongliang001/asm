@@ -18,11 +18,11 @@ public class ClassFile implements ClassNode {
 
     private ClassInfo classInfo;
 
-    private AccessFlagsFormatter.Field filed;
+    private Field filed;
 
-    private AccessFlagsFormatter.Method method;
+    private Method method;
 
-    private AccessFlagsFormatter.SourceFile sourceFile;
+    private SourceFile sourceFile;
 
     public ClassFile(String path) {
         URL resource = this.getClass().getClassLoader().getResource(path);
@@ -43,9 +43,9 @@ public class ClassFile implements ClassNode {
         minorVersion = new MinorVersion(bc);
         constantPoolNode = new ConstantPoolNode(bc);
         classInfo = new ClassInfo(bc);
-        filed = new AccessFlagsFormatter.Field(bc, constantPoolNode);
-        method = new AccessFlagsFormatter.Method(bc, constantPoolNode);
-        sourceFile = new AccessFlagsFormatter.SourceFile(bc, constantPoolNode);
+        filed = new Field(bc, constantPoolNode);
+        method = new Method(bc, constantPoolNode);
+        sourceFile = new SourceFile(bc, constantPoolNode);
     }
 
     public ByteContainer getBc() {

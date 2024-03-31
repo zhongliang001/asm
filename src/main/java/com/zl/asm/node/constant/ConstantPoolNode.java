@@ -1,8 +1,8 @@
 package com.zl.asm.node.constant;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.AccessFlagsFormatter;
 import com.zl.asm.node.ClassNode;
+import com.zl.asm.node.ConstantKind;
 import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
@@ -30,20 +30,24 @@ public class ConstantPoolNode implements ClassNode {
         for (int i = 1; i < count; i++) {
             byte tag = bc.next();
             switch (tag) {
-                case AccessFlagsFormatter.ConstantKind.CONSTANT_Utf8:
-                    constantNodes[i - 1] = new Utf8Constant(bc, AccessFlagsFormatter.ConstantKind.CONSTANT_Utf8, i);
+                case ConstantKind.CONSTANT_Utf8:
+                    constantNodes[i - 1] = new Utf8Constant(bc, ConstantKind.CONSTANT_Utf8, i);
                     break;
-                case AccessFlagsFormatter.ConstantKind.CONSTANT_Integer:
-                    constantNodes[i - 1] = new IntegerConstant(bc, AccessFlagsFormatter.ConstantKind.CONSTANT_Integer, i);
+                case ConstantKind.CONSTANT_Integer:
+                    constantNodes[i - 1] = new IntegerConstant(bc, ConstantKind.CONSTANT_Integer, i);
                     break;
-                case AccessFlagsFormatter.ConstantKind.CONSTANT_Methodref:
-                    constantNodes[i - 1] = new MethodConstant(bc, AccessFlagsFormatter.ConstantKind.CONSTANT_Methodref, i);
+                case ConstantKind.CONSTANT_Fieldref:
+                    constantNodes[i - 1] = new FieldConstant(bc, ConstantKind.CONSTANT_Integer, i);
                     break;
-                case AccessFlagsFormatter.ConstantKind.CONSTANT_Class:
-                    constantNodes[i - 1] = new ClassConstant(bc, AccessFlagsFormatter.ConstantKind.CONSTANT_Class, i);
+                case ConstantKind.CONSTANT_Methodref:
+                    constantNodes[i - 1] = new MethodConstant(bc, ConstantKind.CONSTANT_Methodref, i);
                     break;
-                case AccessFlagsFormatter.ConstantKind.CONSTANT_NameAndType:
-                    constantNodes[i - 1] = new NameAndTypeConstant(bc, AccessFlagsFormatter.ConstantKind.CONSTANT_NameAndType, i);
+                case ConstantKind.CONSTANT_Class:
+                    constantNodes[i - 1] = new ClassConstant(bc, ConstantKind.CONSTANT_Class, i);
+                    break;
+                case ConstantKind.CONSTANT_NameAndType:
+                    constantNodes[i - 1] = new NameAndTypeConstant(bc, ConstantKind.CONSTANT_NameAndType, i);
+                    break;
                 default:
                     break;
             }

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class MinorVersion implements ClassNode {
 
-    private Logger logger = LoggerFactory.getLogger(MinorVersion.class);
+    private final Logger logger = LoggerFactory.getLogger(MinorVersion.class);
     private byte[] minorVersion;
     private byte[] majorVersion;
     private int startIndex;
@@ -37,23 +37,18 @@ public class MinorVersion implements ClassNode {
         logger.info("bytes:{}", bytes);
     }
 
-
-    //   @Override
     public int getStartIndex() {
         return startIndex;
     }
 
-    //    @Override
     public int getEndIndex() {
         return endIndex;
     }
 
-    //   @Override
     public byte[] getBytes() {
         return bytes;
     }
 
-    // @Override
     public String getValue() {
         return value;
     }

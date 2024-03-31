@@ -1,7 +1,7 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.AccessFlagsFormatter;
+import com.zl.asm.node.ExceptionNode;
 import com.zl.asm.node.constant.ConstantNode;
 import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
@@ -18,7 +18,7 @@ public class CodeAttribute extends Attribute {
 
     private int exceptionTableLength;
 
-    private AccessFlagsFormatter.ExceptionVisitor[] exceptionVisitors;
+    private ExceptionNode[] exceptionNodes;
 
     private int attributesCount;
 
@@ -31,9 +31,9 @@ public class CodeAttribute extends Attribute {
         codeLength = ByteUtils.bytesToInt(bc.next(4));
         code = bc.next(codeLength);
         exceptionTableLength = ByteUtils.bytesToInt(bc.next(2));
-        exceptionVisitors = new AccessFlagsFormatter.ExceptionVisitor[exceptionTableLength];
-        for (int i = 0; i < exceptionVisitors.length; i++) {
-            exceptionVisitors[i] = new AccessFlagsFormatter.ExceptionVisitor(bc);
+        exceptionNodes = new ExceptionNode[exceptionTableLength];
+        for (int i = 0; i < exceptionNodes.length; i++) {
+            exceptionNodes[i] = new ExceptionNode(bc);
         }
         attributesCount = ByteUtils.bytesToInt(bc.next(2));
         attributeVisitors = new Attribute[attributesCount];
@@ -61,8 +61,8 @@ public class CodeAttribute extends Attribute {
         logger.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
         logger.info("code:{}, codeString:{}", code, new String(code));
         logger.info("exceptionTableLength:{}", exceptionTableLength);
-        for (int i = 0; i < exceptionVisitors.length; i++) {
-            exceptionVisitors[i].accept();
+        for (int i = 0; i < exceptionNodes.length; i++) {
+            exceptionNodes[i].accept();
         }
         for (int i = 0; i < attributeVisitors.length; i++) {
             //     attributeVisitors[i].accept();
