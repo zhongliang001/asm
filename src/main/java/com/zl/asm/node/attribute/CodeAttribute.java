@@ -24,22 +24,12 @@ public class CodeAttribute extends Attribute {
 
     private Attribute[] attributeVisitors;
 
-    @Override
-    public void log(Logger logger, boolean isParent) {
-        logger.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
-        logger.info("code:{}, codeString:{},Hex:{}", code,new String(code), ByteUtils.toHexString(code));
-        logger.info("exceptionTableLength:{}", exceptionTableLength);
-        for (Attribute attributeVisitor : attributeVisitors) {
-            attributeVisitor.log(logger, true);
-        }
-    }
-
     public CodeAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
         maxStack = ByteUtils.bytesToInt(bc.next(2));
         maxLocals = ByteUtils.bytesToInt(bc.next(2));
         codeLength = ByteUtils.bytesToInt(bc.next(4));
-             code = bc.next(codeLength);
+        code = bc.next(codeLength);
         exceptionTableLength = ByteUtils.bytesToInt(bc.next(2));
         exceptionVisitors = new AccessFlagsFormatter.ExceptionVisitor[exceptionTableLength];
         for (int i = 0; i < exceptionVisitors.length; i++) {
@@ -50,23 +40,32 @@ public class CodeAttribute extends Attribute {
         for (int i = 0; i < attributeVisitors.length; i++) {
             ConstantNode[] constantVisitors = constantPoolNode.getConstantNodes();
             int i1 = ByteUtils.bytesToInt(bc.next(2));
-            ConstantNode constantVisitor = constantVisitors[i1-1];
+            ConstantNode constantVisitor = constantVisitors[i1 - 1];
             String value = constantVisitor.getValue();
-            attributeVisitors[i] = AttributeFactory.getAttribute(bc,constantPoolNode,value,i1 );
+            attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
         }
     }
 
+    @Override
+    public void log(Logger logger, boolean isParent) {
+        logger.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
+        logger.info("code:{}, codeString:{},Hex:{}", code, new String(code), ByteUtils.toHexString(code));
+        logger.info("exceptionTableLength:{}", exceptionTableLength);
+        for (Attribute attributeVisitor : attributeVisitors) {
+            attributeVisitor.log(logger, true);
+        }
+    }
 
     public void accept() {
-      //  super.accept();
+        //  super.accept();
         logger.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
-        logger.info("code:{}, codeString:{}", code,new String(code));
+        logger.info("code:{}, codeString:{}", code, new String(code));
         logger.info("exceptionTableLength:{}", exceptionTableLength);
         for (int i = 0; i < exceptionVisitors.length; i++) {
             exceptionVisitors[i].accept();
         }
         for (int i = 0; i < attributeVisitors.length; i++) {
-       //     attributeVisitors[i].accept();
+            //     attributeVisitors[i].accept();
         }
     }
 

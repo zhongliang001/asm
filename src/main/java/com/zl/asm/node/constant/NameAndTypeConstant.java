@@ -34,11 +34,11 @@ public class NameAndTypeConstant extends ConstantNode {
 
     @Override
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
-            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, NameAndTypeConstant.class.getSimpleName(), nameIndex,descriptorIndex);
+            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, NameAndTypeConstant.class.getSimpleName(), nameIndex, descriptorIndex);
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{}, tag:{}, classIndex:{},name_and_type_index:{}", index, tag, nameIndex, descriptorIndex);
         }
     }

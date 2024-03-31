@@ -26,7 +26,7 @@ public class MinorVersion implements ClassNode {
         System.arraycopy(majorVersion, 0, bytes, 0, majorVersion.length);
         System.arraycopy(minorVersion, 0, bytes, majorVersion.length, majorVersion.length);
         value = ByteUtils.bytesToInt(majorVersion) + "." + ByteUtils.bytesToInt(minorVersion);
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             log(logger);
         }
     }

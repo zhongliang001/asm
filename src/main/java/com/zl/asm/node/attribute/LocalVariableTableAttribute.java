@@ -21,7 +21,7 @@ public class LocalVariableTableAttribute extends Attribute {
 
     @Override
     public void log(Logger log, boolean isParent) {
-        log.info("localVariableTableLength:{}",localVariableTableLength);
+        log.info("localVariableTableLength:{}", localVariableTableLength);
         for (LocalVariableTable localVariableTable : localVariableTables) {
             localVariableTable.log(log, isParent);
         }

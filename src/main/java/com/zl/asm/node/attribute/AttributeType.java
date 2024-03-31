@@ -10,5 +10,5 @@ public class AttributeType {
 
     public static final String LOCALVARIABLETABLE = "LocalVariableTable";
 
-    public static final String SOURCEFILE ="SourceFile";
+    public static final String SOURCEFILE = "SourceFile";
 }

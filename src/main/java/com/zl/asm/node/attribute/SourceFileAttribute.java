@@ -6,9 +6,10 @@ import org.slf4j.Logger;
 
 import java.util.Formatter;
 
-public class SourceFileAttribute  extends Attribute {
+public class SourceFileAttribute extends Attribute {
 
     private int sourcefileIndex;
+
     public SourceFileAttribute(ByteContainer bc, int attributeNameIndex) {
         super(bc, attributeNameIndex);
         sourcefileIndex = ByteUtils.bytesToInt(bc.next(2));
@@ -17,7 +18,7 @@ public class SourceFileAttribute  extends Attribute {
     @Override
     public void log(Logger log, boolean isParent) {
         Formatter formatter = new Formatter();
-        formatter.format("sourcefileIndex:|%03d|",sourcefileIndex);
-        log.info("{}",formatter);
+        formatter.format("sourcefileIndex:|%03d|", sourcefileIndex);
+        log.info("{}", formatter);
     }
 }

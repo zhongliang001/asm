@@ -40,11 +40,11 @@ public class IntegerConstant extends ConstantNode {
 
     @Override
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
             formatter.format("|%03d|\t|%s|\tvalue=%d", index, IntegerConstant.class.getSimpleName(), ByteUtils.bytesToInt(bytes));
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{},tag:{}bytes:{}", index, tag, ByteUtils.bytesToInt(bytes));
         }
 

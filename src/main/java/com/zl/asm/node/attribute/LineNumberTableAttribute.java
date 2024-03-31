@@ -8,7 +8,8 @@ public class LineNumberTableAttribute extends Attribute {
 
     private int lineNumberTableLength;
 
-    private LineNumbeTable [] lineNumbeTables;
+    private LineNumbeTable[] lineNumbeTables;
+
     public LineNumberTableAttribute(ByteContainer bc, int attributeNameIndex) {
         super(bc, attributeNameIndex);
         lineNumberTableLength = ByteUtils.bytesToInt(bc.next(2));
@@ -20,7 +21,7 @@ public class LineNumberTableAttribute extends Attribute {
 
     @Override
     public void log(Logger log, boolean isParent) {
-        log.info("lineNumberTableLength:{}",lineNumberTableLength);
+        log.info("lineNumberTableLength:{}", lineNumberTableLength);
         for (LineNumbeTable lineNumbeTable : lineNumbeTables) {
             lineNumbeTable.log(log, isParent);
         }

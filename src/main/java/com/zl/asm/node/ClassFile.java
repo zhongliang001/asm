@@ -2,7 +2,7 @@ package com.zl.asm.node;
 
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.constant.ConstantPoolNode;
-import com.zl.asm.reader.*;
+import com.zl.asm.reader.Reader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +38,7 @@ public class ClassFile implements ClassNode {
         init();
     }
 
-    public void init(){
+    public void init() {
         magicVistor = new Magic(bc);
         minorVersion = new MinorVersion(bc);
         constantPoolNode = new ConstantPoolNode(bc);

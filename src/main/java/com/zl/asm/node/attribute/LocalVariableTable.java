@@ -10,11 +10,11 @@ import java.util.Formatter;
 
 public class LocalVariableTable implements ClassNode {
 
-    private int  startPc;
-    private int  length;
-    private int  nameIndex;
-    private int  descriptorIndex;
-    private int  index;
+    private int startPc;
+    private int length;
+    private int nameIndex;
+    private int descriptorIndex;
+    private int index;
 
     public LocalVariableTable(ByteContainer bc) {
         this.startPc = ByteUtils.bytesToInt(bc.next(2));
@@ -26,7 +26,7 @@ public class LocalVariableTable implements ClassNode {
 
     public void log(Logger logger, boolean isParent) {
         Formatter formatter = new Formatter();
-        formatter.format("startPc:|%03d|lineNumber:%d,nameIndex:%d,descriptorIndex:|%03d|, index:%d", startPc, length, nameIndex,descriptorIndex,index);
+        formatter.format("startPc:|%03d|lineNumber:%d,nameIndex:%d,descriptorIndex:|%03d|, index:%d", startPc, length, nameIndex, descriptorIndex, index);
         logger.info("{}", formatter);
     }
 

@@ -30,7 +30,7 @@ public class ClassInfo implements ClassNode {
         for (int i = 0; i < interfaceCount; i++) {
             interFaces[i] = ByteUtils.bytesToInt(bc.next(2));
         }
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             log(logger);
         }
     }
@@ -47,8 +47,8 @@ public class ClassInfo implements ClassNode {
     @Override
     public void log(Logger logger) {
         Formatter formatter = new Formatter();
-        formatter.format("thisClass:%03d,superClass:%03d,interfaceCount:%03d", thisClass,superClass,interfaceCount);
-        logger.info("{},interFaces:{}",formatter,interFaces);
+        formatter.format("thisClass:%03d,superClass:%03d,interfaceCount:%03d", thisClass, superClass, interfaceCount);
+        logger.info("{},interFaces:{}", formatter, interFaces);
     }
 
     @Override

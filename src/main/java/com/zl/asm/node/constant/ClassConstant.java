@@ -31,11 +31,11 @@ public class ClassConstant extends ConstantNode {
     }
 
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
             formatter.format("|%03d|\t|%s|\t|%03d|", index, ClassConstant.class.getSimpleName(), classIndex);
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{}, tag:{}, classIndex:{}", index, tag, classIndex);
         }
     }

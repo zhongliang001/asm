@@ -23,6 +23,7 @@ public class AccessFlagsVisitor implements ClassNode {
         accessString = "Ox" + ByteUtils.toHexString(accessBytes);
         accessFlags = AccessFlagsFormatter.getAccessFlag(ByteUtils.bytesToInt(accessBytes), type);
     }
+
     public void accept() {
         logger.info("accessString:{},accessFlags:{}", accessString, accessFlags.toArray());
     }

@@ -37,11 +37,11 @@ public class MethodConstant extends ConstantNode {
 
     @Override
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
-            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, MethodConstant.class.getSimpleName(), classIndex,name_and_type_index);
+            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, MethodConstant.class.getSimpleName(), classIndex, name_and_type_index);
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{}, tag:{}, classIndex:{},name_and_type_index:{}", index, tag, classIndex, name_and_type_index);
         }
     }

@@ -16,7 +16,8 @@ public abstract class ConstantNode implements ClassNode {
     public ConstantNode(ByteContainer bc) {
 
     }
-    public void accept(Reader reader){
+
+    public void accept(Reader reader) {
         reader.read(this);
     }
 

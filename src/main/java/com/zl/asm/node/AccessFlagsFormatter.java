@@ -5,7 +5,7 @@ import com.zl.asm.node.attribute.Attribute;
 import com.zl.asm.node.attribute.AttributeFactory;
 import com.zl.asm.node.constant.ConstantNode;
 import com.zl.asm.node.constant.ConstantPoolNode;
-import com.zl.asm.reader.*;
+import com.zl.asm.reader.Reader;
 import com.zl.asm.util.BitUtils;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
@@ -88,7 +88,6 @@ public class AccessFlagsFormatter {
             } else if (type == AccessFlagType.FIELD_ACCESS_FLAG) {
                 list.add("ACC_VOLATILE");
             }
-
         }
         if (BitUtils.checkBit(num, 12)) {
             list.add("ACC_STRICT");
@@ -114,21 +113,21 @@ public class AccessFlagsFormatter {
 
         private Attribute[] attributeVisitors;
 
-        public SourceFile(ByteContainer bc, ConstantPoolNode constantPoolNode)  {
+        public SourceFile(ByteContainer bc, ConstantPoolNode constantPoolNode) {
             attributesCount = ByteUtils.bytesToInt(bc.next(2));
             attributeVisitors = new Attribute[attributesCount];
             for (int i = 0; i < attributesCount; i++) {
                 ConstantNode[] constantVisitors = constantPoolNode.getConstantNodes();
                 int i1 = ByteUtils.bytesToInt(bc.next(2));
-                ConstantNode constantVisitor = constantVisitors[i1-1];
+                ConstantNode constantVisitor = constantVisitors[i1 - 1];
                 String value = constantVisitor.getValue();
-                attributeVisitors[i] = AttributeFactory.getAttribute(bc,constantPoolNode,value,i1 );
+                attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
             }
         }
 
         @Override
         public void log(Logger log) {
-            log.info("attributesCount:{}",attributesCount);
+            log.info("attributesCount:{}", attributesCount);
             for (Attribute attributeVisitor : attributeVisitors) {
                 attributeVisitor.log(log, true);
             }
@@ -160,14 +159,14 @@ public class AccessFlagsFormatter {
             for (int i = 0; i < attributeVisitors.length; i++) {
                 ConstantNode[] constantVisitors = constantPoolNode.getConstantNodes();
                 int i1 = ByteUtils.bytesToInt(bc.next(2));
-                ConstantNode constantVisitor = constantVisitors[i1-1];
+                ConstantNode constantVisitor = constantVisitors[i1 - 1];
                 String value = constantVisitor.getValue();
-                attributeVisitors[i] = AttributeFactory.getAttribute(bc,constantPoolNode,value,i1 );
+                attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
             }
 
         }
 
-        public void log(Logger log, boolean isParent){
+        public void log(Logger log, boolean isParent) {
             Formatter formatter = new Formatter();
             formatter.format("nameIndex:|%03d|,descriptorIndex:|%s|attributesCount:%d", nameIndex, descriptorIndex, attributesCount);
             log.info("{}", formatter);
@@ -181,7 +180,7 @@ public class AccessFlagsFormatter {
             accessFlagsVisitor.accept();
             logger.info("nameIndex:{},descriptorIndex:{}, attributesCount:{}", nameIndex, descriptorIndex, attributesCount);
             for (int i = 0; i < attributeVisitors.length; i++) {
-           //     attributeVisitors[i].accept();
+                //     attributeVisitors[i].accept();
             }
         }
 
@@ -202,13 +201,13 @@ public class AccessFlagsFormatter {
             methodNum = ByteUtils.bytesToInt(bc.next(2));
             methodItem = new MethodItem[methodNum];
             for (int i = 0; i < methodNum; i++) {
-                methodItem[i] = new MethodItem(bc,constantPoolNode);
+                methodItem[i] = new MethodItem(bc, constantPoolNode);
             }
         }
 
         @Override
         public void log(Logger log) {
-            log.info("methodNum:{}",methodNum);
+            log.info("methodNum:{}", methodNum);
             for (MethodItem methodItemVisitor : methodItem) {
                 methodItemVisitor.log(log, true);
             }
@@ -244,16 +243,16 @@ public class AccessFlagsFormatter {
             for (int i = 0; i < attributesCount; i++) {
                 ConstantNode[] constantVisitors = constantPoolNode.getConstantNodes();
                 int i1 = ByteUtils.bytesToInt(bc.next(2));
-                ConstantNode constantVisitor = constantVisitors[i1-1];
+                ConstantNode constantVisitor = constantVisitors[i1 - 1];
                 String value = constantVisitor.getValue();
-                attributeVisitors[i] = AttributeFactory.getAttribute(bc,constantPoolNode,value,i1);
+                attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
             }
         }
 
         public void log(Logger log, boolean isParent) {
             Formatter formatter = new Formatter();
             formatter.format("nameIndex:%03d|descriptorIndex:%03d|，attributesCount:%03d|", nameIndex, descriptorIndex, attributesCount);
-            log.info("{}",formatter);
+            log.info("{}", formatter);
             for (Attribute attributeVisitor : attributeVisitors) {
                 attributeVisitor.log(log, true);
             }
@@ -289,7 +288,7 @@ public class AccessFlagsFormatter {
         public void log(Logger log) {
             log.info("fieldsCount:{}", fieldsCount);
             for (int i = 0; i < fieldItemVisitors.length; i++) {
-                fieldItemVisitors[i].log(log,true);
+                fieldItemVisitors[i].log(log, true);
             }
         }
 
@@ -326,7 +325,7 @@ public class AccessFlagsFormatter {
         private int catchType;
 
         public ExceptionVisitor(ByteContainer bc) {
-    //        super(bc);
+            //        super(bc);
             startPc = ByteUtils.bytesToInt(bc.next(2));
             endPc = ByteUtils.bytesToInt(bc.next(2));
             handlerPc = ByteUtils.bytesToInt(bc.next(2));

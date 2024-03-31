@@ -34,11 +34,11 @@ public class Utf8Constant extends ConstantNode {
 
     @Override
     public void log(Logger log, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
             formatter.format("|%03d|\t|%s|\t\tvalue=%s", index, Utf8Constant.class.getSimpleName(), new String(bytes));
             log.info("{}", formatter);
-        }else {
+        } else {
             log.info("index:{},tag:{},length:{},bytes:{}", index, tag, length, new String(bytes));
         }
 

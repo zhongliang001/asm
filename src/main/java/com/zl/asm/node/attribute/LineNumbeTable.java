@@ -33,6 +33,6 @@ public class LineNumbeTable implements ClassNode {
 
     @Override
     public void accept(Reader reader) {
-
+        reader.read(this);
     }
 }
