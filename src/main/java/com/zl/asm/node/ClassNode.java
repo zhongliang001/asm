@@ -9,5 +9,6 @@ public interface ClassNode {
     default void log(Logger logger) {
 
     }
+
     void accept(Reader reader);
 }

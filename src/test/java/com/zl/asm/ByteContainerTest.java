@@ -29,4 +29,13 @@ class ByteContainerTest {
         assertArrayEquals(bytes2, next2);
 
     }
+
+    @Test
+    void copy() {
+        ByteContainer bc = new ByteContainer(bytes);
+        byte[] copy = bc.copy(2, 3);
+        byte[] target = new byte[]{3, 4};
+        assertArrayEquals(target, copy);
+
+    }
 }

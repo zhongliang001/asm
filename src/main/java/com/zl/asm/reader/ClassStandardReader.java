@@ -22,8 +22,8 @@ public class ClassStandardReader implements Reader {
         classNodes.add(node);
     }
 
-    public void log(){
-        classNodes.forEach(node->{
+    public void log() {
+        classNodes.forEach(node -> {
             node.log(logger);
         });
     }

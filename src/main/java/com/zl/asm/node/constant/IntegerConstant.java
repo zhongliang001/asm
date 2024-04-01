@@ -14,19 +14,25 @@ public class IntegerConstant extends ConstantNode {
     private int index;
     private int tag;
     private byte[] bytes;
-
     private String value;
 
+    private int startIndex;
+    private int endIndex;
 
     public IntegerConstant(ByteContainer bc, int tag, int index) {
-        super(bc);
+        startIndex = bc.getIndex();
         this.index = index;
         this.tag = tag;
         this.bytes = bc.next(Integer.BYTES);
         if (logger.isDebugEnabled()) {
             log(logger, false);
         }
-        value = new String(bytes);
+        value = String.valueOf(ByteUtils.bytesToInt(bytes));
+        endIndex = bc.getIndex() - 1;
+        if (logger.isDebugEnabled()) {
+            log(logger, false);
+            logger.debug("IntegerConstant code:{}", bc.copy(startIndex, endIndex));
+        }
     }
 
     public void accept(Reader reader) {
@@ -40,11 +46,11 @@ public class IntegerConstant extends ConstantNode {
 
     @Override
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
             formatter.format("|%03d|\t|%s|\tvalue=%d", index, IntegerConstant.class.getSimpleName(), ByteUtils.bytesToInt(bytes));
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{},tag:{}bytes:{}", index, tag, ByteUtils.bytesToInt(bytes));
         }
 

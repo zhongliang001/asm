@@ -17,7 +17,6 @@ public class ClassConstant extends ConstantNode {
     private int classIndex;
 
     public ClassConstant(ByteContainer bc, int tag, int index) {
-        super(bc);
         this.index = index;
         this.tag = tag;
         classIndex = ByteUtils.bytesToInt(bc.next(2));
@@ -31,11 +30,11 @@ public class ClassConstant extends ConstantNode {
     }
 
     public void log(Logger logger, boolean isParent) {
-        if(isParent){
+        if (isParent) {
             Formatter formatter = new Formatter();
             formatter.format("|%03d|\t|%s|\t|%03d|", index, ClassConstant.class.getSimpleName(), classIndex);
             logger.info("{}", formatter);
-        }else{
+        } else {
             logger.info("index:{}, tag:{}, classIndex:{}", index, tag, classIndex);
         }
     }
