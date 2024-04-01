@@ -18,7 +18,7 @@ public class AttributeFactory {
             case AttributeType.SOURCEFILE:
                 return new SourceFileAttribute(bc, attributeNameIndex);
             default:
-                return null;
+                throw new RuntimeException();
         }
     }
 }

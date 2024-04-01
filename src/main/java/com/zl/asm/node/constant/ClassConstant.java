@@ -17,7 +17,6 @@ public class ClassConstant extends ConstantNode {
     private int classIndex;
 
     public ClassConstant(ByteContainer bc, int tag, int index) {
-        super(bc);
         this.index = index;
         this.tag = tag;
         classIndex = ByteUtils.bytesToInt(bc.next(2));

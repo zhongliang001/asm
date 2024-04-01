@@ -13,6 +13,9 @@ public class ConstantPoolNode implements ClassNode {
     private Logger logger = LoggerFactory.getLogger(ConstantPoolNode.class);
     private int count;
 
+    private int startIndex;
+    private int endIndex;
+
     private ConstantNode[] constantNodes;
 
     public ConstantNode[] getConstantNodes() {
@@ -24,6 +27,7 @@ public class ConstantPoolNode implements ClassNode {
     }
 
     public ConstantPoolNode(ByteContainer bc) {
+        startIndex = bc.getIndex();
         byte[] next = bc.next(2);
         count = ByteUtils.bytesToInt(next);
         constantNodes = new ConstantNode[count - 1];
@@ -37,7 +41,7 @@ public class ConstantPoolNode implements ClassNode {
                     constantNodes[i - 1] = new IntegerConstant(bc, ConstantKind.CONSTANT_Integer, i);
                     break;
                 case ConstantKind.CONSTANT_Fieldref:
-                    constantNodes[i - 1] = new FieldConstant(bc, ConstantKind.CONSTANT_Integer, i);
+                    constantNodes[i - 1] = new FieldConstant(bc, ConstantKind.CONSTANT_Fieldref, i);
                     break;
                 case ConstantKind.CONSTANT_Methodref:
                     constantNodes[i - 1] = new MethodConstant(bc, ConstantKind.CONSTANT_Methodref, i);
@@ -51,6 +55,11 @@ public class ConstantPoolNode implements ClassNode {
                 default:
                     break;
             }
+        }
+        endIndex = bc.getIndex() - 1;
+        if (logger.isDebugEnabled()) {
+            log(logger);
+            logger.debug("ConstanPooledNodeCode:{}", bc.copy(startIndex, endIndex));
         }
 
     }
@@ -74,5 +83,10 @@ public class ConstantPoolNode implements ClassNode {
                 constantNode.accept(reader);
             }
         }
+    }
+
+
+    public int getCount() {
+        return count;
     }
 }

@@ -16,19 +16,32 @@ public class MethodConstant extends ConstantNode {
     private int index;
 
     private int classIndex;
-
     // 指向方法
     private int nameAndTypeIndex;
 
+    private int startIndex;
+
+    private int endIndex;
+
     public MethodConstant(ByteContainer bc, int tag, int index) {
-        super(bc);
+        startIndex = bc.getIndex();
         this.index = index;
         this.tag = tag;
         classIndex = ByteUtils.bytesToInt(bc.next(2));
         nameAndTypeIndex = ByteUtils.bytesToInt(bc.next(2));
+        endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
+            logger.debug("MethodConstant code:{}", bc.copy(startIndex, endIndex));
         }
+    }
+
+    public int getClassIndex() {
+        return classIndex;
+    }
+
+    public int getNameAndTypeIndex() {
+        return nameAndTypeIndex;
     }
 
     @Override

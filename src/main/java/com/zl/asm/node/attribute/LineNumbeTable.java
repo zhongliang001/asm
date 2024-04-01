@@ -21,13 +21,13 @@ public class LineNumbeTable implements ClassNode {
 
     public void log(Logger logger) {
         Formatter formatter = new Formatter();
-        formatter.format("startPc:|%03d|lineNumber::|%03d|", startPc, lineNumber);
+        formatter.format("startPc:|%03d|lineNumber:|%03d|", startPc, lineNumber);
         logger.info("{}", formatter);
     }
 
     public void log(Logger logger, boolean isParent) {
         Formatter formatter = new Formatter();
-        formatter.format("startPc:|%03d|lineNumber::|%03d|", startPc, lineNumber);
+        formatter.format("startPc:|%03d|lineNumber:|%03d|", startPc, lineNumber);
         logger.info("{}", formatter);
     }
 

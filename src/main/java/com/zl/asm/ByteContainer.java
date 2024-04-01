@@ -26,8 +26,14 @@ public class ByteContainer {
         return result;
     }
 
-
     public int getIndex() {
         return index;
+    }
+
+    public byte[] copy(int startIndex, int endIndex) {
+        int length = endIndex - startIndex + 1;
+        byte[] bt = new byte[length];
+        System.arraycopy(bytes, startIndex, bt, 0, length);
+        return bt;
     }
 }

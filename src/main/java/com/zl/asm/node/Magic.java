@@ -16,13 +16,16 @@ public class Magic implements ClassNode {
 
     private String value;
 
+    private byte[] allBytes;
+
     public Magic(ByteContainer bc) {
         startIndex = bc.getIndex();
         bytes = bc.next(4);
-        endIndex = bc.getIndex();
+        endIndex = bc.getIndex() - 1;
         value = ByteUtils.toHexString(bytes);
         if (logger.isDebugEnabled()) {
             log(logger);
+            logger.debug("MagicCode:{}", bc.copy(startIndex, endIndex));
         }
     }
 

@@ -17,15 +17,30 @@ public class NameAndTypeConstant extends ConstantNode {
     private int nameIndex;
     private int descriptorIndex;
 
+    private int startIndex;
+
+    private int endIndex;
+
+
     public NameAndTypeConstant(ByteContainer bc, int tag, int index) {
-        super(bc);
+        startIndex = bc.getIndex();
         this.tag = tag;
         this.index = index;
         this.nameIndex = ByteUtils.bytesToInt(bc.next(2));
         this.descriptorIndex = ByteUtils.bytesToInt(bc.next(2));
+        endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
+            logger.debug("NameAndTypeConstant code:{}", bc.copy(startIndex, endIndex));
         }
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getDescriptorIndex() {
+        return descriptorIndex;
     }
 
     public void accept() {

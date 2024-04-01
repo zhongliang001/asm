@@ -21,13 +21,14 @@ public class MinorVersion implements ClassNode {
         startIndex = bc.getIndex();
         minorVersion = bc.next(2);
         majorVersion = bc.next(2);
-        endIndex = bc.getIndex();
+        endIndex = bc.getIndex() - 1;
         bytes = new byte[minorVersion.length + majorVersion.length];
         System.arraycopy(majorVersion, 0, bytes, 0, majorVersion.length);
         System.arraycopy(minorVersion, 0, bytes, majorVersion.length, majorVersion.length);
         value = ByteUtils.bytesToInt(majorVersion) + "." + ByteUtils.bytesToInt(minorVersion);
         if (logger.isDebugEnabled()) {
             log(logger);
+            logger.debug("MinorCode:{}", bc.copy(startIndex, endIndex));
         }
     }
 

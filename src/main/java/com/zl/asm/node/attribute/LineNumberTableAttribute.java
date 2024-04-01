@@ -1,6 +1,7 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 
@@ -26,4 +27,12 @@ public class LineNumberTableAttribute extends Attribute {
             lineNumbeTable.log(log, isParent);
         }
     }
+
+    public void accept(Reader reader) {
+        reader.read(this);
+        for (LineNumbeTable lineNumbeTable : lineNumbeTables) {
+            lineNumbeTable.accept(reader);
+        }
+    }
+
 }

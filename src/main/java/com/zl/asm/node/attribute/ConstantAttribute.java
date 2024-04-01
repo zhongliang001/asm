@@ -22,5 +22,8 @@ public class ConstantAttribute extends Attribute {
         log.info("{}", formatter);
     }
 
-
+    @Override
+    public void log(Logger log) {
+        log(logger, false);
+    }
 }
