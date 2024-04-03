@@ -22,7 +22,9 @@ public class CodeAttribute extends Attribute {
 
     private int attributesCount;
 
-    private Attribute[] attributeVisitors;
+    private Attribute[] attributes;
+
+    private int endIndex;
 
     public CodeAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
@@ -36,17 +38,51 @@ public class CodeAttribute extends Attribute {
             exceptionNodes[i] = new ExceptionNode(bc);
         }
         attributesCount = ByteUtils.bytesToInt(bc.next(2));
-        attributeVisitors = new Attribute[attributesCount];
-        for (int i = 0; i < attributeVisitors.length; i++) {
+        attributes = new Attribute[attributesCount];
+        for (int i = 0; i < attributes.length; i++) {
             ConstantNode[] constantVisitors = constantPoolNode.getConstantNodes();
             int i1 = ByteUtils.bytesToInt(bc.next(2));
             ConstantNode constantVisitor = constantVisitors[i1 - 1];
             String value = constantVisitor.getValue();
-            attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
+            attributes[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
         }
+        endIndex = bc.getIndex() -1;
         if (logger.isDebugEnabled()) {
             log(logger);
+            logger.info("CodeAttribute code:{}", bc.copy(startIndex,endIndex));
         }
+    }
+
+    public int getMaxStack() {
+        return maxStack;
+    }
+
+    public int getMaxLocals() {
+        return maxLocals;
+    }
+
+    public int getCodeLength() {
+        return codeLength;
+    }
+
+    public int getExceptionTableLength() {
+        return exceptionTableLength;
+    }
+
+    public ExceptionNode[] getExceptionNodes() {
+        return exceptionNodes;
+    }
+
+    public int getAttributesCount() {
+        return attributesCount;
+    }
+
+    public Attribute[] getAttributes() {
+        return attributes;
+    }
+
+    public byte[] getCode() {
+        return code;
     }
 
     @Override
@@ -55,7 +91,7 @@ public class CodeAttribute extends Attribute {
         log.info("code:{}, codeString:{},Hex:{}", code, new String(code), ByteUtils.toHexString(code));
         log.info("exceptionTableLength:{}", exceptionTableLength);
         if (!isParent) {
-            for (Attribute attributeVisitor : attributeVisitors) {
+            for (Attribute attributeVisitor : attributes) {
                 attributeVisitor.log(log, true);
             }
         }

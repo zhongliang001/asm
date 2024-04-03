@@ -11,10 +11,12 @@ public abstract class Attribute implements ClassNode {
 
     private final Logger logger = LoggerFactory.getLogger(Attribute.class);
     public int attributeNameIndex;
-
     public int attributeLength;
 
+    protected int startIndex;
+
     public Attribute(ByteContainer bc, int attributeNameIndex) {
+        this.startIndex = bc.getIndex();
         this.attributeNameIndex = attributeNameIndex;
         this.attributeLength = ByteUtils.bytesToInt(bc.next(4));
     }
