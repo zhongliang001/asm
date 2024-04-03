@@ -12,7 +12,7 @@ public class ClassInfo implements ClassNode {
 
     private final Logger logger = LoggerFactory.getLogger(ClassInfo.class);
 
-    private AccessFlagsVisitor accessFlagsVisitor;
+    private AccessFlag accessFlag;
     private int thisClass;
 
     private int superClass;
@@ -21,8 +21,13 @@ public class ClassInfo implements ClassNode {
 
     private int[] interFaces;
 
+    private int startIndex;
+
+    private int endIndex;
+
     public ClassInfo(ByteContainer bc) {
-        accessFlagsVisitor = new AccessFlagsVisitor(bc, AccessFlagType.CLASS_ACCESS_FLAG);
+        startIndex = bc.getIndex();
+        accessFlag = new AccessFlag(bc, AccessFlagType.CLASS_ACCESS_FLAG);
         thisClass = ByteUtils.bytesToInt(bc.next(2));
         superClass = ByteUtils.bytesToInt(bc.next(2));
         interfaceCount = ByteUtils.bytesToInt(bc.next(2));
@@ -30,25 +35,40 @@ public class ClassInfo implements ClassNode {
         for (int i = 0; i < interfaceCount; i++) {
             interFaces[i] = ByteUtils.bytesToInt(bc.next(2));
         }
+        endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger);
+            logger.debug("ClassInfo code:{}", bc.copy(startIndex, endIndex));
         }
     }
 
-    public void accept() {
-        accessFlagsVisitor.accept();
-        logger.info("thisClass:{}", thisClass);
-        logger.info("superClass:{}", superClass);
-        logger.info("interfaceCount:{}", interfaceCount);
-        logger.info("interFaces:{}", interFaces);
+    public AccessFlag getAccessFlag() {
+        return accessFlag;
+    }
 
+    public int getThisClass() {
+        return thisClass;
+    }
+
+    public int getSuperClass() {
+        return superClass;
+    }
+
+    public int getInterfaceCount() {
+        return interfaceCount;
+    }
+
+    public int[] getInterFaces() {
+        return interFaces;
     }
 
     @Override
     public void log(Logger logger) {
+        accessFlag.log(logger, true);
         Formatter formatter = new Formatter();
         formatter.format("thisClass:%03d,superClass:%03d,interfaceCount:%03d", thisClass, superClass, interfaceCount);
         logger.info("{},interFaces:{}", formatter, interFaces);
+
     }
 
     @Override

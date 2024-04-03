@@ -14,12 +14,31 @@ public class Method implements ClassNode {
 
     private MethodItem[] methodItem;
 
+    private int startIndex;
+
+    private int endIndex;
+
     public Method(ByteContainer bc, ConstantPoolNode constantPoolNode) {
-        methodNum = ByteUtils.bytesToInt(bc.next(2));
-        methodItem = new MethodItem[methodNum];
-        for (int i = 0; i < methodNum; i++) {
+        this.startIndex = bc.getIndex();
+        this.methodNum = ByteUtils.bytesToInt(bc.next(2));
+        this.methodItem = new MethodItem[this.methodNum];
+        for (int i = 0; i < this.methodNum; i++) {
             methodItem[i] = new MethodItem(bc, constantPoolNode);
         }
+        this.endIndex = bc.getIndex() -1;
+
+        if (logger.isDebugEnabled()) {
+            log(logger);
+            logger.info("Method code:{}",bc.copy(startIndex, endIndex));
+        }
+    }
+
+    public int getMethodNum() {
+        return methodNum;
+    }
+
+    public MethodItem[] getMethodItem() {
+        return methodItem;
     }
 
     @Override

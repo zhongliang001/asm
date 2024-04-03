@@ -14,7 +14,7 @@ import java.util.Formatter;
 
 public class FieldItem implements ClassNode {
     private final Logger logger = LoggerFactory.getLogger(FieldItem.class);
-    private AccessFlagsVisitor accessFlagsVisitor;
+    private AccessFlag accessFlagsVisitor;
 
     private int nameIndex;
 
@@ -24,8 +24,12 @@ public class FieldItem implements ClassNode {
 
     private Attribute[] attributeVisitors;
 
+    private int startIndex;
+    private int endIndex;
+
     public FieldItem(ByteContainer bc, ConstantPoolNode constantPoolNode) {
-        accessFlagsVisitor = new AccessFlagsVisitor(bc, AccessFlagType.FIELD_ACCESS_FLAG);
+        this.startIndex = bc.getIndex();
+        accessFlagsVisitor = new AccessFlag(bc, AccessFlagType.FIELD_ACCESS_FLAG);
         nameIndex = ByteUtils.bytesToInt(bc.next(2));
         descriptorIndex = ByteUtils.bytesToInt(bc.next(2));
         attributesCount = ByteUtils.bytesToInt(bc.next(2));
@@ -37,6 +41,27 @@ public class FieldItem implements ClassNode {
             String value = constantVisitor.getValue();
             attributeVisitors[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
         }
+        this.endIndex = bc.getIndex() - 1;
+        if (logger.isDebugEnabled()) {
+            log(logger, false);
+            logger.info("FieldItem code:{}", bc.copy(startIndex, endIndex));
+        }
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getDescriptorIndex() {
+        return descriptorIndex;
+    }
+
+    public int getAttributesCount() {
+        return attributesCount;
+    }
+
+    public Attribute[] getAttributeVisitors() {
+        return attributeVisitors;
     }
 
     public void log(Logger log, boolean isParent) {
