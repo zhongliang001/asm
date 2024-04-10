@@ -8,8 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class SourceFileAttributeTest {
 
     byte[] bytes = new byte[]{0, 0, 0, 2, 0, 24};
+
     @Test
-    public void test(){
+    public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
         SourceFileAttribute sourceFileAttribute = new SourceFileAttribute(byteContainer, 1);
         int sourceFileIndex = sourceFileAttribute.getSourcefileIndex();

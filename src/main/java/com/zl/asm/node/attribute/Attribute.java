@@ -5,11 +5,9 @@ import com.zl.asm.node.ClassNode;
 import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class Attribute implements ClassNode {
 
-    private final Logger logger = LoggerFactory.getLogger(Attribute.class);
     public int attributeNameIndex;
     public int attributeLength;
 

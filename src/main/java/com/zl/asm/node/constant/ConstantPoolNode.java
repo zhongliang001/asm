@@ -49,11 +49,29 @@ public class ConstantPoolNode implements ClassNode {
                 case ConstantKind.CONSTANT_Class:
                     constantNodes[i - 1] = new ClassConstant(bc, ConstantKind.CONSTANT_Class, i);
                     break;
+                case ConstantKind.CONSTANT_String:
+                    constantNodes[i - 1] = new StringConstant(bc, ConstantKind.CONSTANT_String, i);
+                    break;
+                case ConstantKind.CONSTANT_InterfaceMethodref:
+                    constantNodes[i - 1] = new InterfaceMethodrefConstant(bc, ConstantKind.CONSTANT_InterfaceMethodref, i);
+                    break;
                 case ConstantKind.CONSTANT_NameAndType:
                     constantNodes[i - 1] = new NameAndTypeConstant(bc, ConstantKind.CONSTANT_NameAndType, i);
                     break;
-                default:
+                case ConstantKind.CONSTANT_Dynamic_info:
+                    constantNodes[i - 1] = new DynamicConstant(bc, ConstantKind.CONSTANT_Dynamic_info, i);
                     break;
+                case ConstantKind.CONSTANT_InvokeDynamic_info:
+                    constantNodes[i - 1] = new DynamicConstant(bc, ConstantKind.CONSTANT_InvokeDynamic_info, i);
+                    break;
+                case ConstantKind.CONSTANT_MethodHandle_info:
+                    constantNodes[i - 1] = new MethodHandleConstant(bc, ConstantKind.CONSTANT_MethodHandle_info, i);
+                    break;
+                case ConstantKind.CONSTANT_MethodType_info:
+                    constantNodes[i - 1] = new MethodTypeConstant(bc, ConstantKind.CONSTANT_MethodType_info, i);
+                    break;
+                default:
+                    throw new RuntimeException(String.valueOf(tag));
             }
         }
         endIndex = bc.getIndex() - 1;

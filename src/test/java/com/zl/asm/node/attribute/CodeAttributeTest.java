@@ -24,6 +24,7 @@ class CodeAttributeTest {
             106, 97, 118, 97, 47, 108, 97, 110, 103, 47, 67, 108, 111, 110, 101, 97, 98, 108, 101, 1, 0, 13, 99, 111,
             109, 47, 122, 108, 47, 84, 101, 115, 116, 73, 110};
     byte[] codes = new byte[]{42, -73, 0, 1, 42, 16, 10, -75, 0, 2, -79};
+
     @Test
     public void test() {
         ByteContainer nodeByteContainer = new ByteContainer(bytes);

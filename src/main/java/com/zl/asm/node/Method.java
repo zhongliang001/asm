@@ -25,11 +25,11 @@ public class Method implements ClassNode {
         for (int i = 0; i < this.methodNum; i++) {
             methodItem[i] = new MethodItem(bc, constantPoolNode);
         }
-        this.endIndex = bc.getIndex() -1;
+        this.endIndex = bc.getIndex() - 1;
 
         if (logger.isDebugEnabled()) {
             log(logger);
-            logger.info("Method code:{}",bc.copy(startIndex, endIndex));
+            logger.info("Method code:{}", bc.copy(startIndex, endIndex));
         }
     }
 

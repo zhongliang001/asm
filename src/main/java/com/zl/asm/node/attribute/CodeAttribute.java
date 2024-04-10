@@ -46,10 +46,10 @@ public class CodeAttribute extends Attribute {
             String value = constantVisitor.getValue();
             attributes[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
         }
-        endIndex = bc.getIndex() -1;
+        endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger);
-            logger.info("CodeAttribute code:{}", bc.copy(startIndex,endIndex));
+            logger.info("CodeAttribute code:{}", bc.copy(startIndex, endIndex));
         }
     }
 
@@ -90,10 +90,11 @@ public class CodeAttribute extends Attribute {
         log.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
         log.info("code:{}, codeString:{},Hex:{}", code, new String(code), ByteUtils.toHexString(code));
         log.info("exceptionTableLength:{}", exceptionTableLength);
-        if (!isParent) {
-            for (Attribute attributeVisitor : attributes) {
-                attributeVisitor.log(log, true);
-            }
+        for (ExceptionNode exceptionNode : exceptionNodes) {
+            exceptionNode.log(log, true);
+        }
+        for (Attribute attributeVisitor : attributes) {
+            attributeVisitor.log(log, true);
         }
     }
 

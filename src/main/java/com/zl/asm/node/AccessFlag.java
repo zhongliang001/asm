@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AccessFlag implements ClassNode {
 
-    private Logger logger = LoggerFactory.getLogger(AccessFlag.class);
+    private final Logger logger = LoggerFactory.getLogger(AccessFlag.class);
 
     private byte[] accessBytes;
 
@@ -24,7 +24,6 @@ public class AccessFlag implements ClassNode {
     public AccessFlag(ByteContainer bc, int type) {
         startIndex = bc.getIndex();
         accessBytes = bc.next(2);
-        int i = ByteUtils.bytesToInt(accessBytes);
         accessString = "Ox" + ByteUtils.toHexString(accessBytes);
         accessFlags = AccessFlagsFormatter.getAccessFlag(ByteUtils.bytesToInt(accessBytes), type);
         endIndex = bc.getIndex() - 1;
@@ -40,6 +39,10 @@ public class AccessFlag implements ClassNode {
             log.info("accessString:{}", accessString);
         }
 
+    }
+
+    public String getAccessString() {
+        return accessString;
     }
 
     public List<String> getAccessFlags() {

@@ -17,7 +17,7 @@ public class SourceFileAttribute extends Attribute {
     public SourceFileAttribute(ByteContainer bc, int attributeNameIndex) {
         super(bc, attributeNameIndex);
         this.sourcefileIndex = ByteUtils.bytesToInt(bc.next(2));
-        this.endIndex = bc.getIndex() -1;
+        this.endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
             logger.info("SourceFileAttribute code:{}", bc.copy(startIndex, endIndex));

@@ -42,7 +42,7 @@ public class MethodItem implements ClassNode {
             attributes[i] = AttributeFactory.getAttribute(bc, constantPoolNode, value, i1);
         }
         endIndex = bc.getIndex() - 1;
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             log(logger, false);
             logger.info("MethodItem:{}", bc.copy(startIndex, endIndex));
         }

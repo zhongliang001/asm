@@ -17,8 +17,22 @@ public class AttributeFactory {
                 return new LocalVariableTableAttribute(bc, attributeNameIndex);
             case AttributeType.SOURCEFILE:
                 return new SourceFileAttribute(bc, attributeNameIndex);
+            case AttributeType.LOCALVARIABLETYPETABLE:
+                return new LocalVariableTypeTableAttribute(bc, attributeNameIndex);
+            case AttributeType.STACKMAPTABLE:
+                return new StackMapTableAttribute(bc, attributeNameIndex);
+            case AttributeType.SIGNATURE:
+                return new SignatureAttribute(bc, attributeNameIndex);
+            case AttributeType.EXCEPTIONS:
+                return new ExceptionAttribute(bc, attributeNameIndex);
+            case AttributeType.NESTMEMBERS:
+                return new NestMemberAttribute(bc, attributeNameIndex);
+            case AttributeType.INNERCLASSES:
+                return new InnerClassAttribute(bc, attributeNameIndex);
+            case AttributeType.BOOTSTRAPMETHODS:
+                return new BootstrapMethodAttribute(bc, attributeNameIndex);
             default:
-                throw new RuntimeException();
+                throw new RuntimeException(type);
         }
     }
 }
