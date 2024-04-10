@@ -27,7 +27,7 @@ public class ExceptionAttribute extends Attribute {
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
-            logger.info("ConstantAttribute code:{}", bc.copy(startIndex, endIndex));
+            logger.info("ExceptionAttribute code:{}", bc.copy(startIndex, endIndex));
         }
     }
 

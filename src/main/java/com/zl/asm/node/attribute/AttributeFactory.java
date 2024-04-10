@@ -25,6 +25,10 @@ public class AttributeFactory {
                 return new SignatureAttribute(bc, attributeNameIndex);
             case AttributeType.EXCEPTIONS:
                 return new ExceptionAttribute(bc, attributeNameIndex);
+            case AttributeType.NESTMEMBERS:
+                return new NestMemberAttribute(bc, attributeNameIndex);
+            case AttributeType.INNERCLASSES:
+                return new InnerClassAttribute(bc, attributeNameIndex);
             default:
                 throw new RuntimeException(type);
         }

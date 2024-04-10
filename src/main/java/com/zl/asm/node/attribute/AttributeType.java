@@ -19,4 +19,8 @@ public class AttributeType {
     public static final String SIGNATURE = "Signature";
 
     public static final String EXCEPTIONS = "Exceptions";
+
+    public static final String NESTMEMBERS = "NestMembers";
+
+    public static final String INNERCLASSES = "InnerClasses";
 }
