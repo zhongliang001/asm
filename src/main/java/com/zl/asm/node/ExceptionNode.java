@@ -18,12 +18,21 @@ public class ExceptionNode implements ClassNode {
 
     private int catchType;
 
+    private int startIndex;
+
+    private int endIndex;
+
     public ExceptionNode(ByteContainer bc) {
-        //        super(bc);
+        startIndex = bc.getIndex();
         startPc = ByteUtils.bytesToInt(bc.next(2));
         endPc = ByteUtils.bytesToInt(bc.next(2));
         handlerPc = ByteUtils.bytesToInt(bc.next(2));
         catchType = ByteUtils.bytesToInt(bc.next(2));
+        endIndex = bc.getIndex() - 1;
+        if (logger.isDebugEnabled()) {
+            log(logger);
+            logger.info("ExceptionNode code:{}", bc.copy(startIndex, endIndex));
+        }
     }
 
     // @Override
@@ -31,8 +40,12 @@ public class ExceptionNode implements ClassNode {
         logger.info("startPc:{}, endPc:{}，handlerPc：{}，catchType：{}", startPc, endPc, handlerPc, catchType);
     }
 
+    public void log(Logger log, boolean isParent) {
+        logger.info("startPc:{}, endPc:{}，handlerPc：{}，catchType：{}", startPc, endPc, handlerPc, catchType);
+    }
+
     @Override
     public void accept(Reader reader) {
-
+        reader.read(this);
     }
 }

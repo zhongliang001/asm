@@ -19,7 +19,7 @@ public class ByteUtils {
         int result = 0;
         int len = bytes.length;
         for (int i = 0; i < bytes.length; i++, len--) {
-            result += bytes[i] << (len - 1) * 8;
+            result += (bytes[i] & 0xFF) << ((len - 1) * 8);
         }
         return result;
     }

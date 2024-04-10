@@ -17,4 +17,6 @@ public class AttributeType {
     public static final String STACKMAPTABLE = "StackMapTable";
 
     public static final String SIGNATURE = "Signature";
+
+    public static final String EXCEPTIONS = "Exceptions";
 }

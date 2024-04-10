@@ -42,6 +42,10 @@ public class AccessFlag implements ClassNode {
 
     }
 
+    public String getAccessString() {
+        return accessString;
+    }
+
     public List<String> getAccessFlags() {
         return accessFlags;
     }

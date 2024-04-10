@@ -23,6 +23,8 @@ public class AttributeFactory {
                 return new StackMapTableAttribute(bc, attributeNameIndex);
             case AttributeType.SIGNATURE:
                 return new SignatureAttribute(bc, attributeNameIndex);
+            case AttributeType.EXCEPTIONS:
+                return new ExceptionAttribute(bc, attributeNameIndex);
             default:
                 throw new RuntimeException(type);
         }

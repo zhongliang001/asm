@@ -26,8 +26,16 @@ public class StackMapTableAttribute extends Attribute {
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger);
-            logger.info("CodeAttribute code:{}", bc.copy(startIndex, endIndex));
+            logger.info("StackMapTableAttribute code:{}", bc.copy(startIndex, endIndex));
         }
+    }
+
+    public int getNumberOfEntries() {
+        return numberOfEntries;
+    }
+
+    public StackMapFrame[] getStackMapFrames() {
+        return stackMapFrames;
     }
 
     @Override
