@@ -27,8 +27,9 @@ class MethodItemTest {
             114, 108, 100, 1, 0, 16, 106, 97, 118, 97, 47, 108, 97, 110, 103, 47, 79, 98, 106, 101, 99, 116, 1, 0, 19,
             106, 97, 118, 97, 47, 108, 97, 110, 103, 47, 67, 108, 111, 110, 101, 97, 98, 108, 101, 1, 0, 13, 99, 111,
             109, 47, 122, 108, 47, 84, 101, 115, 116, 73, 110};
+
     @Test
-    public void test(){
+    public void test() {
         ByteContainer nodeByteContainer = new ByteContainer(bytes);
         ConstantPoolNode node = new ConstantPoolNode(nodeByteContainer);
         ByteContainer methodItemByteContainer = new ByteContainer(methodItemBytes);

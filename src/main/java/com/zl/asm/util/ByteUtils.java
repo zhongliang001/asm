@@ -24,6 +24,11 @@ public class ByteUtils {
         return result;
     }
 
+    public static int byteToUnsignedInt(byte bt) {
+
+        return bt & 0xFF;
+    }
+
     public static String toOctString(byte[] bytes) {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {

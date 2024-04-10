@@ -11,4 +11,10 @@ public class AttributeType {
     public static final String LOCALVARIABLETABLE = "LocalVariableTable";
 
     public static final String SOURCEFILE = "SourceFile";
+
+    public static final String LOCALVARIABLETYPETABLE = "LocalVariableTypeTable";
+
+    public static final String STACKMAPTABLE = "StackMapTable";
+
+    public static final String SIGNATURE = "Signature";
 }

@@ -17,8 +17,14 @@ public class AttributeFactory {
                 return new LocalVariableTableAttribute(bc, attributeNameIndex);
             case AttributeType.SOURCEFILE:
                 return new SourceFileAttribute(bc, attributeNameIndex);
+            case AttributeType.LOCALVARIABLETYPETABLE:
+                return new LocalVariableTypeTableAttribute(bc, attributeNameIndex);
+            case AttributeType.STACKMAPTABLE:
+                return new StackMapTableAttribute(bc, attributeNameIndex);
+            case AttributeType.SIGNATURE:
+                return new SignatureAttribute(bc, attributeNameIndex);
             default:
-                throw new RuntimeException();
+                throw new RuntimeException(type);
         }
     }
 }

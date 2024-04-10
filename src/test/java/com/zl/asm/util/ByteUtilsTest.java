@@ -29,4 +29,9 @@ class ByteUtilsTest {
     }
 
 
+    @Test
+    void bytesToUnsignedInt() {
+        byte bt = -4;
+        assertEquals(252, ByteUtils.byteToUnsignedInt(bt));
+    }
 }
