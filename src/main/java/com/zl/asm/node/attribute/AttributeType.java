@@ -23,4 +23,6 @@ public class AttributeType {
     public static final String NESTMEMBERS = "NestMembers";
 
     public static final String INNERCLASSES = "InnerClasses";
+
+    public static final String BOOTSTRAPMETHODS = "BootstrapMethods";
 }

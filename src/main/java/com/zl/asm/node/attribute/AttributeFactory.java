@@ -29,6 +29,8 @@ public class AttributeFactory {
                 return new NestMemberAttribute(bc, attributeNameIndex);
             case AttributeType.INNERCLASSES:
                 return new InnerClassAttribute(bc, attributeNameIndex);
+            case AttributeType.BOOTSTRAPMETHODS:
+                return new BootstrapMethodAttribute(bc, attributeNameIndex);
             default:
                 throw new RuntimeException(type);
         }
