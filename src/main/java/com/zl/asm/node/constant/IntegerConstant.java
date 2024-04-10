@@ -1,7 +1,6 @@
 package com.zl.asm.node.constant;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +32,6 @@ public class IntegerConstant extends ConstantNode {
             log(logger, false);
             logger.debug("IntegerConstant code:{}", bc.copy(startIndex, endIndex));
         }
-    }
-
-    public void accept(Reader reader) {
-        reader.read(this);
     }
 
     @Override

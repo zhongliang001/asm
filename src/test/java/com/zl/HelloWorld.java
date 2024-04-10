@@ -16,7 +16,7 @@ public abstract class HelloWorld implements Cloneable, TestIn {
         int c = a + b;
         URL resource = this.getClass().getClassLoader().getResource("./");
         if (resource != null) {
-            try (FileInputStream fileInputStream = new FileInputStream(new File(resource.getPath()));) {
+            try (FileInputStream fileInputStream = new FileInputStream(new File(resource.getPath()))) {
                 byte[] bytes = fileInputStream.readAllBytes();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -90,8 +90,8 @@ public class CodeAttribute extends Attribute {
         log.info(" maxStack:{}，maxLocals：{}, codeLength:{} ", maxStack, maxLocals, codeLength);
         log.info("code:{}, codeString:{},Hex:{}", code, new String(code), ByteUtils.toHexString(code));
         log.info("exceptionTableLength:{}", exceptionTableLength);
-        for (int i = 0; i < exceptionNodes.length; i++) {
-            exceptionNodes[i].log(log, true);
+        for (ExceptionNode exceptionNode : exceptionNodes) {
+            exceptionNode.log(log, true);
         }
         for (Attribute attributeVisitor : attributes) {
             attributeVisitor.log(log, true);

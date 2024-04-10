@@ -25,10 +25,6 @@ public class ClassConstant extends ConstantNode {
         }
     }
 
-    public void accept() {
-        logger.info("index:{},tag:{}classIndex:{}", index, tag, classIndex);
-    }
-
     public void log(Logger logger, boolean isParent) {
         if (isParent) {
             Formatter formatter = new Formatter();

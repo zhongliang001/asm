@@ -4,7 +4,6 @@ import com.zl.asm.ByteContainer;
 import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.reader.Reader;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +11,7 @@ import java.net.URL;
 public class ClassFile implements ClassNode {
 
     private ByteContainer bc;
-    private Magic magicVistor;
+    private Magic magic;
     private MinorVersion minorVersion;
     private ConstantPoolNode constantPoolNode;
 
@@ -27,11 +26,10 @@ public class ClassFile implements ClassNode {
     public ClassFile(String path) {
         URL resource = this.getClass().getClassLoader().getResource(path);
         if (resource != null) {
-            try (FileInputStream fileInputStream = new FileInputStream(new File(resource.getPath()));) {
+            try (FileInputStream fileInputStream = new FileInputStream(resource.getPath())) {
                 byte[] bytes = fileInputStream.readAllBytes();
                 bc = new ByteContainer(bytes);
             } catch (IOException e) {
-                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }
@@ -39,7 +37,7 @@ public class ClassFile implements ClassNode {
     }
 
     public void init() {
-        magicVistor = new Magic(bc);
+        magic = new Magic(bc);
         minorVersion = new MinorVersion(bc);
         constantPoolNode = new ConstantPoolNode(bc);
         classInfo = new ClassInfo(bc);
@@ -58,7 +56,7 @@ public class ClassFile implements ClassNode {
 
     @Override
     public void accept(Reader reader) {
-        magicVistor.accept(reader);
+        magic.accept(reader);
         minorVersion.accept(reader);
         constantPoolNode.accept(reader);
         classInfo.accept(reader);

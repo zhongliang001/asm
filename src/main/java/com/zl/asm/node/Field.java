@@ -43,8 +43,8 @@ public class Field implements ClassNode {
     @Override
     public void log(Logger log) {
         log.info("fieldsCount:{}", fieldsCount);
-        for (int i = 0; i < fieldItems.length; i++) {
-            fieldItems[i].log(log, true);
+        for (FieldItem fieldItem : fieldItems) {
+            fieldItem.log(log, true);
         }
     }
 
