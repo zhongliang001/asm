@@ -70,6 +70,12 @@ public class ConstantPoolNode implements ClassNode {
                 case ConstantKind.CONSTANT_MethodType_info:
                     constantNodes[i - 1] = new MethodTypeConstant(bc, ConstantKind.CONSTANT_MethodType_info, i);
                     break;
+                case ConstantKind.CONSTANT_Module_info:
+                    constantNodes[i - 1] = new ModuleConstant(bc, ConstantKind.CONSTANT_Module_info, i);
+                    break;
+                case ConstantKind.CONSTANT_Package_info:
+                    constantNodes[i - 1] = new PackageConstant(bc, ConstantKind.CONSTANT_Package_info, i);
+                    break;
                 default:
                     throw new RuntimeException(String.valueOf(tag));
             }

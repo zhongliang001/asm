@@ -25,5 +25,9 @@ public class ConstantKind {
 
     public final static int CONSTANT_InvokeDynamic_info = 18;
 
+    public final static int CONSTANT_Module_info = 19;
+
+    public final static int CONSTANT_Package_info = 20;
+
 
 }

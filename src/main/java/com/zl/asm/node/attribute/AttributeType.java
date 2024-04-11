@@ -25,4 +25,10 @@ public class AttributeType {
     public static final String INNERCLASSES = "InnerClasses";
 
     public static final String BOOTSTRAPMETHODS = "BootstrapMethods";
+
+    public static final String NESTHOST = "NestHost";
+
+    public static final String ENCLOSINGMETHOD = "EnclosingMethod";
+
+    public static final String MODULE = "Module";
 }

@@ -31,6 +31,12 @@ public class AttributeFactory {
                 return new InnerClassAttribute(bc, attributeNameIndex);
             case AttributeType.BOOTSTRAPMETHODS:
                 return new BootstrapMethodAttribute(bc, attributeNameIndex);
+            case AttributeType.NESTHOST:
+                return new NestHostAttribute(bc, attributeNameIndex);
+            case AttributeType.ENCLOSINGMETHOD:
+                return new EnclosingMethodAttribute(bc, attributeNameIndex);
+            case AttributeType.MODULE:
+                return new ModuleAttribute(bc, attributeNameIndex);
             default:
                 throw new RuntimeException(type);
         }
