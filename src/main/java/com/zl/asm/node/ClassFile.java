@@ -6,7 +6,6 @@ import com.zl.asm.reader.Reader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 
 public class ClassFile implements ClassNode {
 
@@ -24,14 +23,11 @@ public class ClassFile implements ClassNode {
     private SourceFile sourceFile;
 
     public ClassFile(String path) {
-        URL resource = this.getClass().getClassLoader().getResource(path);
-        if (resource != null) {
-            try (FileInputStream fileInputStream = new FileInputStream(resource.getPath())) {
-                byte[] bytes = fileInputStream.readAllBytes();
-                bc = new ByteContainer(bytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try (FileInputStream fileInputStream = new FileInputStream(path)) {
+            byte[] bytes = fileInputStream.readAllBytes();
+            bc = new ByteContainer(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         init();
     }
@@ -63,5 +59,9 @@ public class ClassFile implements ClassNode {
         filed.accept(reader);
         method.accept(reader);
         sourceFile.accept(reader);
+    }
+
+    public void close() {
+        bc = null;
     }
 }

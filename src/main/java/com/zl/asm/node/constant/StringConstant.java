@@ -30,6 +30,10 @@ public class StringConstant extends ConstantNode {
         }
     }
 
+    public int getStringIndex() {
+        return stringIndex;
+    }
+
     @Override
     public void log(Logger logger, boolean isParent) {
         if (isParent) {
@@ -37,7 +41,7 @@ public class StringConstant extends ConstantNode {
             formatter.format("|%03d|\t|%03d|", index, stringIndex);
             logger.info("{}", formatter);
         } else {
-            logger.info("index:{}, tag:{}, stringIndex:{}", index, tag, stringIndex);
+            logger.info("index:{}, {}, stringIndex:{}", index, StringConstant.class.getSimpleName(), stringIndex);
         }
     }
 

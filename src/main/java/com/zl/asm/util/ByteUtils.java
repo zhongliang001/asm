@@ -1,5 +1,7 @@
 package com.zl.asm.util;
 
+import java.nio.ByteBuffer;
+
 public class ByteUtils {
 
     public static String toHexString(byte[] bytes) {
@@ -20,6 +22,29 @@ public class ByteUtils {
         int len = bytes.length;
         for (int i = 0; i < bytes.length; i++, len--) {
             result += (bytes[i] & 0xFF) << ((len - 1) * 8);
+        }
+        return result;
+    }
+
+    public static double bytesToDouble(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.allocate(Double.BYTES);
+        buffer.put(bytes);
+        buffer.flip();
+        return buffer.getDouble();
+    }
+
+    public static float bytesToFloat(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.allocate(Float.BYTES);
+        buffer.put(bytes);
+        buffer.flip();
+        return buffer.getFloat();
+    }
+
+    public static long bytesToLong(byte[] bytes) {
+        long result = 0;
+        int len = bytes.length;
+        for (int i = 0; i < bytes.length; i++, len--) {
+            result += (long) (bytes[i] & 0xFF) << ((len - 1) * 8);
         }
         return result;
     }

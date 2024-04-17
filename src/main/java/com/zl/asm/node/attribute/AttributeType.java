@@ -25,4 +25,36 @@ public class AttributeType {
     public static final String INNERCLASSES = "InnerClasses";
 
     public static final String BOOTSTRAPMETHODS = "BootstrapMethods";
+
+    public static final String NESTHOST = "NestHost";
+
+    public static final String ENCLOSINGMETHOD = "EnclosingMethod";
+
+    public static final String MODULE = "Module";
+
+    public static final String RUNTIMEVISIBLEANNOTATIONS = "RuntimeVisibleAnnotations";
+
+    public static final String RUNTIMEVISIBLEPARAMETERANNOTATIONS = "RuntimeVisibleParameterAnnotations";
+
+    public static final String ANNOTATIONDEFAULT = "AnnotationDefault";
+
+    public static final String SYNTHETIC = "Synthetic";
+
+    public static final String DEPRECATED = "Deprecated";
+
+    public static final String RUNTIMEINVISIBLEANNOTATIONS = "RuntimeInvisibleAnnotations";
+
+    public static final String SOURCEDEBUGEXTENSION = "SourceDebugExtension";
+
+    public static final String RUNTIMEINVISIBLEPARAMETERANNOTATIONS = "RuntimeInvisibleParameterAnnotations";
+
+    public static final String METHODPARAMETERS = "MethodParameters";
+
+    public static final String RECORD = "Record";
+
+    public static final String RUNTIMEVISIBLETYPEANNOTATIONS = "RuntimeVisibleTypeAnnotations";
+
+    public static final String RUNTIMEINVISIBLETYPEANNOTATIONS = "RuntimeInvisibleTypeAnnotations";
+
+    public static final String PERMITTEDSUBCLASSES = "PermittedSubclasses";
 }

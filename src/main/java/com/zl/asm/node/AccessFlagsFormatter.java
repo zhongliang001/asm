@@ -14,8 +14,11 @@ public class AccessFlagsFormatter {
      * ACC_STATIC 		0000 0000 0000 1000
      * ACC_FINAL  		0000 0000 0001 0000
      * ACC_SUPER  		0000 0000 0010 0000
+     * ACC_TRANSITIVE   0000 0000 0010 0000
+     * ACC_OPEN         0000 0000 0010 0000
      * ACC_SYNCHRONIZED 0000 0000 0010 0000
      * ACC_BRIDGE       0000 0000 0100 0000
+     * ACC_STATIC_PHASE 0000 0000 0100 0000
      * ACC_TRANSIENT    0000 0000 1000 0000
      * ACC_VARARGS      0000 0000 1000 0000
      * ACC_NATIVE       0000 0001 0000 0000
@@ -27,6 +30,7 @@ public class AccessFlagsFormatter {
      * ACC_ANNOTATION	0010 0000 0000 0000
      * ACC_ENUM		    0100 0000 0000 0000
      * ACC_MODULE		1000 0000 0000 0000
+     * ACC_MANDATED     1000 0000 0000 0000
      *
      * @param num AccessFlagNum
      * @return AccessFlagString
@@ -54,10 +58,19 @@ public class AccessFlagsFormatter {
                 list.add("ACC_SUPER");
             } else if (type == AccessFlagType.METHOD_ACCESS_FLAG) {
                 list.add("ACC_SYNCHRONIZED");
+            } else if (type == AccessFlagType.MODULE_ACCESS_FLAG_1) {
+                list.add("ACC_TRANSITIVE");
+            } else if (type == AccessFlagType.MODULE_ACCESS_FLAG) {
+                list.add("ACC_OPEN");
             }
         }
         if (BitUtils.checkBit(num, 7)) {
-            list.add("ACC_BRIDGE");
+            if (type == AccessFlagType.MODULE_ACCESS_FLAG_1) {
+                list.add("ACC_STATIC_PHASE");
+            } else {
+                list.add("ACC_BRIDGE");
+            }
+
         }
         if (BitUtils.checkBit(num, 8)) {
             if (type == AccessFlagType.CLASS_ACCESS_FLAG) {
@@ -92,7 +105,12 @@ public class AccessFlagsFormatter {
             list.add("ACC_ENUM");
         }
         if (BitUtils.checkBit(num, 16)) {
-            list.add("ACC_MODULE");
+            if (type == AccessFlagType.MODULE_ACCESS_FLAG || type == AccessFlagType.MODULE_ACCESS_FLAG_1) {
+                list.add("ACC_MANDATED");
+            } else {
+                list.add("ACC_MODULE");
+            }
+
         }
         return list;
     }

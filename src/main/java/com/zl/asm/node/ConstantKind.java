@@ -5,6 +5,12 @@ public class ConstantKind {
     public final static int CONSTANT_Utf8 = 1;
 
     public final static int CONSTANT_Integer = 3;
+
+    public final static int CONSTANT_Float = 4;
+
+    public final static int CONSTANT_Long = 5;
+
+    public static final int CONSTANT_Double = 6;
     public final static int CONSTANT_Class = 7;
 
     public final static int CONSTANT_String = 8;
@@ -24,6 +30,10 @@ public class ConstantKind {
     public final static int CONSTANT_Dynamic_info = 17;
 
     public final static int CONSTANT_InvokeDynamic_info = 18;
+
+    public final static int CONSTANT_Module_info = 19;
+
+    public final static int CONSTANT_Package_info = 20;
 
 
 }
