@@ -8,7 +8,7 @@ class ClassFileTest {
 
     @Test
     public void testConstruct() {
-        String relatepath = "./com/zl/HelloWorld.class";
+        String relatepath = this.getClass().getClassLoader().getResource("./com/zl/HelloWorld.class").getPath();
         ClassFile classFile = new ClassFile(relatepath);
         ClassStandardReader classStandardReader = new ClassStandardReader();
         classFile.accept(classStandardReader);
