@@ -36,6 +36,18 @@ public class Provide implements ClassNode {
         }
     }
 
+    public int getProvidesIndex() {
+        return providesIndex;
+    }
+
+    public int getProvidesWithCount() {
+        return providesWithCount;
+    }
+
+    public int[] getProvidesWithIndex() {
+        return providesWithIndex;
+    }
+
     public void log(Logger log, boolean isParent) {
         Formatter formatter = new Formatter();
         formatter.format("providesIndex:|%03d|,providesWithCount:%d,providesWithIndex:", providesIndex, providesWithCount);

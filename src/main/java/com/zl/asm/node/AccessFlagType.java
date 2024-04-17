@@ -7,4 +7,5 @@ public class AccessFlagType {
 
     public static final int MODULE_ACCESS_FLAG_1 = 5;
     public static final int MODULE_ACCESS_FLAG = 4;
+
 }

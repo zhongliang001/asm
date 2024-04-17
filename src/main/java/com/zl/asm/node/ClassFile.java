@@ -60,4 +60,8 @@ public class ClassFile implements ClassNode {
         method.accept(reader);
         sourceFile.accept(reader);
     }
+
+    public void close() {
+        bc = null;
+    }
 }

@@ -1,6 +1,7 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.attribute.ann.*;
 import com.zl.asm.node.constant.ConstantPoolNode;
 
 public class AttributeFactory {
@@ -37,8 +38,34 @@ public class AttributeFactory {
                 return new EnclosingMethodAttribute(bc, attributeNameIndex);
             case AttributeType.MODULE:
                 return new ModuleAttribute(bc, attributeNameIndex);
+            case AttributeType.RUNTIMEVISIBLEANNOTATIONS:
+                return new RuntimeVisibleAnnotationAttribute(bc, attributeNameIndex);
+            case AttributeType.RUNTIMEVISIBLEPARAMETERANNOTATIONS:
+                return new RuntimeVisibleParameterAnnAttribute(bc, attributeNameIndex);
+            case AttributeType.ANNOTATIONDEFAULT:
+                return new AnnotationDefaultAttribute(bc, attributeNameIndex);
+            case AttributeType.SYNTHETIC:
+                return new SyntheticAttribute(bc, attributeNameIndex);
+            case AttributeType.DEPRECATED:
+                return new DeprecatedAttribute(bc, attributeNameIndex);
+            case AttributeType.RUNTIMEINVISIBLEANNOTATIONS:
+                return new RuntimeInvisibleAnnotationsAttribute(bc, attributeNameIndex);
+            case AttributeType.SOURCEDEBUGEXTENSION:
+                return new SourceDebugExtensionAttribute(bc, attributeNameIndex);
+            case AttributeType.RUNTIMEINVISIBLEPARAMETERANNOTATIONS:
+                return new RuntimeInvisibleParameterAnnAttribute(bc, attributeNameIndex);
+            case AttributeType.METHODPARAMETERS:
+                return new MethodParametersAttribute(bc, attributeNameIndex);
+            case AttributeType.RECORD:
+                return new RecordAttribute(bc, constantPoolNode, attributeNameIndex);
+            case AttributeType.RUNTIMEVISIBLETYPEANNOTATIONS:
+                return new RuntimeVisibleTypeAnnAttribute(bc, attributeNameIndex);
+            case AttributeType.RUNTIMEINVISIBLETYPEANNOTATIONS:
+                return new RuntimeInvisibleTypeAnnAttribute(bc, attributeNameIndex);
+            case AttributeType.PERMITTEDSUBCLASSES:
+                return new PermittedSubclassAttribute(bc, attributeNameIndex);
             default:
-                throw new RuntimeException(type);
+                return new UnkownAttribute(bc, attributeNameIndex);
         }
     }
 }

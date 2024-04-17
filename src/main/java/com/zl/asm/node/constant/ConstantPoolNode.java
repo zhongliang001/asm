@@ -32,10 +32,18 @@ public class ConstantPoolNode implements ClassNode {
         count = ByteUtils.bytesToInt(next);
         constantNodes = new ConstantNode[count - 1];
         for (int i = 1; i < count; i++) {
-            byte tag = bc.next();
+            int tag = ByteUtils.byteToUnsignedInt(bc.next());
+            if (i == 178) {
+                logger.info("tag:{}", tag);
+            }
             switch (tag) {
                 case ConstantKind.CONSTANT_Utf8:
-                    constantNodes[i - 1] = new Utf8Constant(bc, ConstantKind.CONSTANT_Utf8, i);
+                    try {
+                        constantNodes[i - 1] = new Utf8Constant(bc, ConstantKind.CONSTANT_Utf8, i);
+                    } catch (NullPointerException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     break;
                 case ConstantKind.CONSTANT_Integer:
                     constantNodes[i - 1] = new IntegerConstant(bc, ConstantKind.CONSTANT_Integer, i);
@@ -76,10 +84,23 @@ public class ConstantPoolNode implements ClassNode {
                 case ConstantKind.CONSTANT_Package_info:
                     constantNodes[i - 1] = new PackageConstant(bc, ConstantKind.CONSTANT_Package_info, i);
                     break;
+                case ConstantKind.CONSTANT_Long:
+                    constantNodes[i - 1] = new LongConstant(bc, ConstantKind.CONSTANT_Long, i);
+                    break;
+                case ConstantKind.CONSTANT_Double:
+                    constantNodes[i - 1] = new DoubleConstant(bc, ConstantKind.CONSTANT_Long, i);
+                    break;
+                case ConstantKind.CONSTANT_Float:
+                    constantNodes[i - 1] = new FloatConstant(bc, ConstantKind.CONSTANT_Float, i);
+                    break;
                 default:
                     throw new RuntimeException(String.valueOf(tag));
             }
+            if (tag == ConstantKind.CONSTANT_Long || tag == ConstantKind.CONSTANT_Double) {
+                i++;
+            }
         }
+
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger);

@@ -41,6 +41,23 @@ public class Export implements ClassNode {
         }
     }
 
+
+    public int getExportsIndex() {
+        return exportsIndex;
+    }
+
+    public AccessFlag getExportsFlags() {
+        return exportsFlags;
+    }
+
+    public int getExportsToCount() {
+        return exportsToCount;
+    }
+
+    public int[] getExportsToIndex() {
+        return exportsToIndex;
+    }
+
     public void log(Logger log, boolean isParent) {
         Formatter formatter = new Formatter();
         formatter.format("exportsIndex:|%03d|,exportsFlags:%s,exportsToCount:%d,exportsToIndex:", exportsIndex, exportsFlags.getAccessString(), exportsToCount);

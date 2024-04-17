@@ -29,7 +29,9 @@ public class Utf8Constant extends ConstantNode {
         if (logger.isDebugEnabled()) {
             log(logger);
         }
-        this.value = new String(this.bytes);
+        if (this.length != 0) {
+            this.value = new String(this.bytes);
+        }
         endIndex = bc.getIndex() - 1;
 
         if (logger.isDebugEnabled()) {
@@ -42,10 +44,10 @@ public class Utf8Constant extends ConstantNode {
     public void log(Logger log, boolean isParent) {
         if (isParent) {
             Formatter formatter = new Formatter();
-            formatter.format("|%03d|\t|%s|\t\tvalue=%s", index, Utf8Constant.class.getSimpleName(), new String(bytes));
+            formatter.format("|%03d|\t|%s|\t\tvalue=%s", index, Utf8Constant.class.getSimpleName(), this.value);
             log.info("{}", formatter);
         } else {
-            log.info("index:{},tag:{},length:{},bytes:{}", index, tag, length, new String(bytes));
+            log.info("index:{},tag:{},length:{},bytes:{}", index, tag, length, this.value);
 
         }
 
