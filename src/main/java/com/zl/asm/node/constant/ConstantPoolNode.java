@@ -8,6 +8,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class ConstantPoolNode implements ClassNode {
 
     private Logger logger = LoggerFactory.getLogger(ConstantPoolNode.class);
@@ -33,9 +35,6 @@ public class ConstantPoolNode implements ClassNode {
         constantNodes = new ConstantNode[count - 1];
         for (int i = 1; i < count; i++) {
             int tag = ByteUtils.byteToUnsignedInt(bc.next());
-            if (i == 178) {
-                logger.info("tag:{}", tag);
-            }
             switch (tag) {
                 case ConstantKind.CONSTANT_Utf8:
                     try {
@@ -43,7 +42,6 @@ public class ConstantPoolNode implements ClassNode {
                     } catch (NullPointerException e) {
                         throw new RuntimeException(e);
                     }
-
                     break;
                 case ConstantKind.CONSTANT_Integer:
                     constantNodes[i - 1] = new IntegerConstant(bc, ConstantKind.CONSTANT_Integer, i);
@@ -110,6 +108,19 @@ public class ConstantPoolNode implements ClassNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("count:\t\t%d\n", count);
+        formatter.format("Constant Pool\n");
+        stringBuilder.append(formatter);
+        for (ConstantNode constantNode : constantNodes) {
+            if (constantNode != null) {
+                constantNode.getLog(stringBuilder);
+            }
+        }
+    }
+
+    @Override
     public void log(Logger log) {
         log.info("常量池大小{}", count);
         for (ConstantNode constantNode : constantNodes) {
@@ -123,11 +134,6 @@ public class ConstantPoolNode implements ClassNode {
     @Override
     public void accept(Reader reader) {
         reader.read(this);
-        for (ConstantNode constantNode : constantNodes) {
-            if (constantNode != null) {
-                constantNode.accept(reader);
-            }
-        }
     }
 
 

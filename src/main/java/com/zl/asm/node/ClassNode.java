@@ -10,5 +10,8 @@ public interface ClassNode {
 
     }
 
+    default void getLog(StringBuilder stringBuilder) {
+    }
+
     void accept(Reader reader);
 }

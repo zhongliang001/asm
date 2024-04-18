@@ -16,12 +16,19 @@ public class ClassConstant extends ConstantNode {
     // 指向类名
     private int classIndex;
 
+    private int startIndex;
+
+    private int endIndex;
+
     public ClassConstant(ByteContainer bc, int tag, int index) {
+        startIndex = bc.getIndex();
         this.index = index;
         this.tag = tag;
         classIndex = ByteUtils.bytesToInt(bc.next(2));
+        endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
+            logger.debug("ClassConstant code:{}", bc.copy(startIndex, endIndex));
         }
     }
 
@@ -33,6 +40,13 @@ public class ClassConstant extends ConstantNode {
         } else {
             logger.info("index:{}, tag:{}, classIndex:{}", index, tag, classIndex);
         }
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t\t#%03d\n", index, ClassConstant.class.getSimpleName(), classIndex);
+        stringBuilder.append(formatter);
     }
 
     @Override

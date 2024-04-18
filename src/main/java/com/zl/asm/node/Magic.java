@@ -6,6 +6,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class Magic implements ClassNode {
 
     private final Logger logger = LoggerFactory.getLogger(Magic.class);
@@ -30,8 +32,18 @@ public class Magic implements ClassNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("magic:\t\t%s\n", value);
+        stringBuilder.append(formatter);
+    }
+
+
+    @Override
     public void log(Logger log) {
-        log.info("magic:{}", value);
+        StringBuilder builder = new StringBuilder();
+        getLog(builder);
+        log.info("{}", builder);
     }
 
     public int getStartIndex() {

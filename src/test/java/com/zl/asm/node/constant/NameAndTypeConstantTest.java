@@ -2,20 +2,36 @@ package com.zl.asm.node.constant;
 
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.ConstantKind;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NameAndTypeConstantTest {
-    byte[] bytes = new byte[]{0, 12, 0, 13};
+    static byte[] bytes = new byte[]{0, 12, 0, 13};
+
+    static ByteContainer byteContainer = new ByteContainer(bytes);
+    static NameAndTypeConstant constant = new NameAndTypeConstant(byteContainer, ConstantKind.CONSTANT_NameAndType, 1);
+
+    @BeforeAll
+    public static void init() {
+        byteContainer = new ByteContainer(bytes);
+        constant = new NameAndTypeConstant(byteContainer, ConstantKind.CONSTANT_NameAndType, 1);
+    }
 
     @Test
     public void Test() {
-        ByteContainer byteContainer = new ByteContainer(bytes);
-        NameAndTypeConstant methodConstant = new NameAndTypeConstant(byteContainer, ConstantKind.CONSTANT_NameAndType, 1);
-        int nameIndex = methodConstant.getNameIndex();
+        int nameIndex = constant.getNameIndex();
         assertEquals(12, nameIndex);
-        int descriptorIndex = methodConstant.getDescriptorIndex();
+        int descriptorIndex = constant.getDescriptorIndex();
         assertEquals(13, descriptorIndex);
+    }
+
+    @Test
+    public void getLog() {
+        StringBuilder builder = new StringBuilder();
+        constant.getLog(builder);
+        System.out.println(builder);
+        System.out.println("end");
     }
 }

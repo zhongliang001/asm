@@ -57,6 +57,13 @@ public class FieldConstant extends ConstantNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t\t#%03d.#%03d\n", index, FieldConstant.class.getSimpleName(), classIndex, nameAndTypeIndex);
+        stringBuilder.append(formatter);
+    }
+
+    @Override
     public String getValue() {
         return null;
     }

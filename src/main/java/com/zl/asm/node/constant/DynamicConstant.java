@@ -53,6 +53,13 @@ public class DynamicConstant extends ConstantNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t\t#%03d.#%03d\n", index, DynamicConstant.class.getSimpleName(), bootstrapMethodAttrIndex, nameAndTypeIndex);
+        stringBuilder.append(formatter);
+    }
+
+    @Override
     public String getValue() {
         return null;
     }

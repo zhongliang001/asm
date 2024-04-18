@@ -27,7 +27,7 @@ public class Utf8Constant extends ConstantNode {
         this.length = ByteUtils.bytesToInt(bc.next(2));
         this.bytes = bc.next(this.length);
         if (logger.isDebugEnabled()) {
-            log(logger);
+            log(logger, false);
         }
         if (this.length != 0) {
             this.value = new String(this.bytes);
@@ -50,7 +50,13 @@ public class Utf8Constant extends ConstantNode {
             log.info("index:{},tag:{},length:{},bytes:{}", index, tag, length, this.value);
 
         }
+    }
 
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t\tvalue=%s\n", index, Utf8Constant.class.getSimpleName(), this.value);
+        stringBuilder.append(formatter);
     }
 
     @Override

@@ -56,6 +56,13 @@ public class MethodConstant extends ConstantNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t#%03d.#%03d\n", index, MethodConstant.class.getSimpleName(), classIndex, nameAndTypeIndex);
+        stringBuilder.append(formatter);
+    }
+
+    @Override
     public String getValue() {
         return null;
     }

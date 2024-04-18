@@ -59,6 +59,13 @@ public class NameAndTypeConstant extends ConstantNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t#%03d.#%03d\n", index, NameAndTypeConstant.class.getSimpleName(), nameIndex, descriptorIndex);
+        stringBuilder.append(formatter);
+    }
+
+    @Override
     public String getValue() {
         return null;
     }

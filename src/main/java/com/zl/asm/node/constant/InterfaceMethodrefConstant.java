@@ -48,6 +48,11 @@ public class InterfaceMethodrefConstant extends ConstantNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+
+    }
+
+    @Override
     public String getValue() {
         return null;
     }

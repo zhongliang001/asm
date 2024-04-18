@@ -6,6 +6,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class MinorVersion implements ClassNode {
 
     private final Logger logger = LoggerFactory.getLogger(MinorVersion.class);
@@ -36,6 +38,13 @@ public class MinorVersion implements ClassNode {
     public void log(Logger logger) {
         logger.info("version:{}", value);
         logger.info("bytes:{}", bytes);
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("version:\t%s\n", value);
+        stringBuilder.append(formatter);
     }
 
     public int getStartIndex() {

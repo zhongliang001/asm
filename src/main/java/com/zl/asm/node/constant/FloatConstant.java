@@ -54,7 +54,12 @@ public class FloatConstant extends ConstantNode {
         } else {
             logger.info("index:{},tag:{}bytes:{}", index, tag, ByteUtils.bytesToInt(bytes));
         }
+    }
 
-
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t\tvalue=%f\n", index, FloatConstant.class.getSimpleName(), fValue);
+        stringBuilder.append(formatter);
     }
 }
