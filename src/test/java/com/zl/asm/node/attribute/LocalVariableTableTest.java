@@ -11,7 +11,8 @@ class LocalVariableTableTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        LocalVariableTable localVariableTable = new LocalVariableTable(byteContainer);
+        //TODO
+        LocalVariableTable localVariableTable = new LocalVariableTable(byteContainer, null);
         int nameIndex = localVariableTable.getNameIndex();
         assertEquals(17, nameIndex);
         int descriptorIndex = localVariableTable.getDescriptorIndex();

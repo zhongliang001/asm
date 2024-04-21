@@ -2,6 +2,7 @@ package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.attribute.Attribute;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,9 +13,12 @@ public class AnnotationDefaultAttribute extends Attribute {
 
     private int endIndex;
 
-    public AnnotationDefaultAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public AnnotationDefaultAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
-        elementValue = new ElementValue(bc);
+        this.constantPoolNode = constantPoolNode;
+        elementValue = new ElementValue(bc, constantPoolNode);
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
@@ -25,6 +29,12 @@ public class AnnotationDefaultAttribute extends Attribute {
     public ElementValue getElementValue() {
         return elementValue;
     }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        elementValue.getLog(stringBuilder);
+    }
+
 
     @Override
     public void log(Logger log, boolean isParent) {

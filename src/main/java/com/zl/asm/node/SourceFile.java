@@ -9,6 +9,8 @@ import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 
+import java.util.Formatter;
+
 public class SourceFile implements ClassNode {
 
     private int attributesCount;
@@ -33,6 +35,17 @@ public class SourceFile implements ClassNode {
         for (Attribute attributeVisitor : attributeVisitors) {
             attributeVisitor.log(log, true);
         }
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("SourceFile attributesCount\t%d\n", attributesCount);
+        stringBuilder.append(formatter);
+        for (Attribute attributeVisitor : attributeVisitors) {
+            attributeVisitor.getLog(stringBuilder);
+        }
+
     }
 
     @Override

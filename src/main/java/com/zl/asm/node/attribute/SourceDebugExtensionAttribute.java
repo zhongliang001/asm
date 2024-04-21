@@ -1,8 +1,11 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Formatter;
 
 public class SourceDebugExtensionAttribute extends Attribute {
 
@@ -12,8 +15,11 @@ public class SourceDebugExtensionAttribute extends Attribute {
 
     private int endIndex;
 
+    private ByteContainer bc;
+
     public SourceDebugExtensionAttribute(ByteContainer bc, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.bc = bc;
         debugExtension = bc.next(attributeLength);
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
@@ -22,6 +28,16 @@ public class SourceDebugExtensionAttribute extends Attribute {
 
         }
     }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tSourceDebugExtensionAttribute\tHexcode\t%s\n",
+                ByteUtils.toHexString(bc.copy(startIndex, endIndex)));
+        stringBuilder.append(formatter);
+
+    }
+
 
     public byte[] getDebugExtension() {
         return debugExtension;

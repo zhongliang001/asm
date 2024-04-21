@@ -6,6 +6,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class RecordAttribute extends Attribute {
 
     private final Logger logger = LoggerFactory.getLogger(RecordAttribute.class);
@@ -35,6 +37,17 @@ public class RecordAttribute extends Attribute {
 
     public RecordComponentInfo[] getRecordComponentInfos() {
         return recordComponentInfos;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tRecordAttribute\tcomponentCount\t%d\n", componentCount);
+        stringBuilder.append(formatter);
+        for (RecordComponentInfo recordComponentInfo : recordComponentInfos) {
+            recordComponentInfo.getLog(stringBuilder);
+        }
+
     }
 
     @Override

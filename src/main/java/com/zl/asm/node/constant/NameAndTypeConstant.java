@@ -21,8 +21,11 @@ public class NameAndTypeConstant extends ConstantNode {
 
     private int endIndex;
 
+    private ConstantPoolNode constantPoolNode;
 
-    public NameAndTypeConstant(ByteContainer bc, int tag, int index) {
+
+    public NameAndTypeConstant(ByteContainer bc, ConstantPoolNode constantPoolNode, int tag, int index) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         this.tag = tag;
         this.index = index;
@@ -67,6 +70,9 @@ public class NameAndTypeConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return null;
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode nameConstantNode = constantNodes[nameIndex - 1];
+        ConstantNode constantNode = constantNodes[descriptorIndex - 1];
+        return nameConstantNode.getValue() + "--" + constantNode.getValue();
     }
 }

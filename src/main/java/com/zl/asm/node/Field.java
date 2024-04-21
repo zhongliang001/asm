@@ -7,6 +7,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class Field implements ClassNode {
     private final Logger logger = LoggerFactory.getLogger(Field.class);
     private int fieldsCount;
@@ -38,6 +40,17 @@ public class Field implements ClassNode {
 
     public FieldItem[] getFieldItems() {
         return fieldItems;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("fieldsCount: %d\n", fieldsCount);
+        stringBuilder.append(formatter);
+        for (FieldItem fieldItem : fieldItems) {
+            fieldItem.getLog(stringBuilder);
+        }
+
     }
 
     @Override

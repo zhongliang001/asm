@@ -17,7 +17,8 @@ class MethodConstantTest {
     @BeforeAll
     public static void init() {
         byteContainer = new ByteContainer(bytes);
-        methodConstant = new MethodConstant(byteContainer, ConstantKind.CONSTANT_Methodref, 1);
+        // todo constantPoolNode
+        methodConstant = new MethodConstant(byteContainer, null, ConstantKind.CONSTANT_Methodref, 1);
     }
 
     @Test

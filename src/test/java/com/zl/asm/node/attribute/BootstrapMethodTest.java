@@ -13,7 +13,8 @@ class BootstrapMethodTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        BootstrapMethod bootstrapMethod = new BootstrapMethod(byteContainer);
+        // TODO constantPoolNode
+        BootstrapMethod bootstrapMethod = new BootstrapMethod(byteContainer, null);
         int[] bootstrapArguments = bootstrapMethod.getBootstrapArguments();
         int[] bootstrapArgumentsTarget = new int[]{90, 91, 92};
         assertArrayEquals(bootstrapArgumentsTarget, bootstrapArguments);

@@ -18,7 +18,10 @@ public class ModuleConstant extends ConstantNode {
 
     private int endIndex;
 
-    public ModuleConstant(ByteContainer bc, int tag, int index) {
+    private ConstantPoolNode constantPoolNode;
+
+    public ModuleConstant(ByteContainer bc, ConstantPoolNode constantPoolNode, int tag, int index) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         this.tag = tag;
         this.index = index;
@@ -50,6 +53,8 @@ public class ModuleConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return null;
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[nameIndex - 1];
+        return constantNode.getValue();
     }
 }

@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,11 @@ public class NestMemberAttribute extends Attribute {
 
     private int endIndex;
 
-    public NestMemberAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public NestMemberAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.constantPoolNode = constantPoolNode;
         numberOfClasses = ByteUtils.bytesToInt(bc.next(2));
         classes = new int[numberOfClasses];
         for (int i = 0; i < classes.length; i++) {
@@ -36,6 +41,21 @@ public class NestMemberAttribute extends Attribute {
 
     public int[] getClasses() {
         return classes;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\tNestMemberAttribute\tnumberOfClasses\t%s\n", numberOfClasses);
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        formatter.format("\t\t\t");
+        for (int aClass : classes) {
+            ConstantNode constantNode = constantNodes[aClass - 1];
+            formatter.format("%s\t", constantNode.getValue());
+        }
+        formatter.format("\n");
+        stringBuilder.append(formatter);
+
     }
 
     @Override

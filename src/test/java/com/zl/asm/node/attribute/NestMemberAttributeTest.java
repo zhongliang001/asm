@@ -12,7 +12,8 @@ class NestMemberAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        NestMemberAttribute nestMemberAttribute = new NestMemberAttribute(byteContainer, 1);
+        //  TODO constantPoolNode
+        NestMemberAttribute nestMemberAttribute = new NestMemberAttribute(byteContainer, null, 1);
         int numberOfClasses = nestMemberAttribute.getNumberOfClasses();
         assertEquals(1, numberOfClasses);
         int[] classes = nestMemberAttribute.getClasses();

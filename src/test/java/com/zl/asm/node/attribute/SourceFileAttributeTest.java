@@ -12,7 +12,8 @@ class SourceFileAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        SourceFileAttribute sourceFileAttribute = new SourceFileAttribute(byteContainer, 1);
+        // TODO constantNode
+        SourceFileAttribute sourceFileAttribute = new SourceFileAttribute(byteContainer, null, 1);
         int sourceFileIndex = sourceFileAttribute.getSourcefileIndex();
         assertEquals(24, sourceFileIndex);
 

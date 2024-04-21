@@ -1,15 +1,13 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class LineNumberTable implements ClassNode {
+public class LineNumberTable {
 
     private final Logger logger = LoggerFactory.getLogger(LineNumberTable.class);
     private int startPc;
@@ -46,8 +44,10 @@ public class LineNumberTable implements ClassNode {
         logger.info("{}", formatter);
     }
 
-    @Override
-    public void accept(Reader reader) {
-        reader.read(this);
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\tstartPc\t%d\tlineNumber\t%d\n", startPc, lineNumber);
+        stringBuilder.append(formatter);
     }
 }

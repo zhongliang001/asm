@@ -12,7 +12,8 @@ class InnerClassAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        InnerClassAttribute innerClassAttribute = new InnerClassAttribute(byteContainer, 1);
+        //TODO constantPoolNode
+        InnerClassAttribute innerClassAttribute = new InnerClassAttribute(byteContainer, null, 1);
         int numberOfClasses = innerClassAttribute.getNumberOfClasses();
         assertEquals(1, numberOfClasses);
         ClassTable[] classTables = innerClassAttribute.getClassTables();

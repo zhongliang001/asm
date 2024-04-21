@@ -12,7 +12,8 @@ class RuntimeInvisibleParameterAnnAttributeTest {
     @Test
     public void test() {
         ByteContainer b = new ByteContainer(bytes);
-        RuntimeInvisibleParameterAnnAttribute attribute = new RuntimeInvisibleParameterAnnAttribute(b, 1);
+        //TODO constantPoolNode
+        RuntimeInvisibleParameterAnnAttribute attribute = new RuntimeInvisibleParameterAnnAttribute(b, null, 1);
         int numParameters = attribute.getNumParameters();
         assertEquals(1, numParameters);
         assertEquals(numParameters, attribute.getParameterAnnotations().length);

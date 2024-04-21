@@ -12,7 +12,8 @@ class ModuleAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        ModuleAttribute attribute = new ModuleAttribute(byteContainer, 1);
+        // TODO constantPoolNode
+        ModuleAttribute attribute = new ModuleAttribute(byteContainer, null, 1);
         int exportsCount = attribute.getExportsCount();
         assertEquals(7, exportsCount);
     }

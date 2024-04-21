@@ -17,7 +17,8 @@ class MethodHandleConstantTest {
     @BeforeAll
     public static void init() {
         byteContainer = new ByteContainer(bytes);
-        constant = new MethodHandleConstant(byteContainer, ConstantKind.CONSTANT_MethodHandle_info, 1);
+        //TODO constantPoolNode
+        constant = new MethodHandleConstant(byteContainer, null, ConstantKind.CONSTANT_MethodHandle_info, 1);
     }
 
     @Test

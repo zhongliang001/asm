@@ -1,22 +1,23 @@
 package com.zl.asm.node.stack;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StackMapFrame implements ClassNode {
+import java.util.Formatter;
+
+public class StackMapFrame {
 
     private final Logger logger = LoggerFactory.getLogger(StackMapFrame.class);
     private int frameType;
 
+    private int numberOfLocals;
+
     private VerificationTypeInfo[] locals;
 
     private int offsetDelta;
-
-    private int numberOfLocals;
 
     private int numberOfStackItems;
 
@@ -27,8 +28,10 @@ public class StackMapFrame implements ClassNode {
     private int startIndex;
 
     private int endIndex;
+    private ConstantPoolNode constantPoolNode;
 
-    public StackMapFrame(ByteContainer bc) {
+    public StackMapFrame(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         frameType = ByteUtils.byteToUnsignedInt(bc.next());
         if (frameType >= SameFrameType.SAME_MIN && frameType <= SameFrameType.SAME_MAX) {
@@ -36,13 +39,13 @@ public class StackMapFrame implements ClassNode {
         } else if (frameType >= SameFrameType.SAME_LOCALS_1_STACK_ITEM_MIN && frameType <= SameFrameType.SAME_LOCALS_1_STACK_ITEM_MAX) {
             numberOfLocals = 1;
             locals = new VerificationTypeInfo[numberOfLocals];
-            locals[0] = new VerificationTypeInfo(bc);
+            locals[0] = new VerificationTypeInfo(bc, constantPoolNode);
             frame = "SAME_LOCALS_1_STACK_ITEM";
         } else if (frameType == SameFrameType.SAME_LOCALS_1_STACK_ITEM_EXTENDED) {
             offsetDelta = ByteUtils.bytesToInt(bc.next(2));
             numberOfStackItems = 1;
             stack = new VerificationTypeInfo[numberOfStackItems];
-            stack[0] = new VerificationTypeInfo(bc);
+            stack[0] = new VerificationTypeInfo(bc, constantPoolNode);
             frame = "SAME_LOCALS_1_STACK_ITEM_EXTENDED";
         } else if (frameType >= SameFrameType.CHOP_MIN && frameType <= SameFrameType.CHOP_MAX) {
             offsetDelta = ByteUtils.bytesToInt(bc.next(2));
@@ -55,7 +58,7 @@ public class StackMapFrame implements ClassNode {
             numberOfLocals = frameType - 251;
             locals = new VerificationTypeInfo[numberOfLocals];
             for (int i = 0; i < locals.length; i++) {
-                locals[i] = new VerificationTypeInfo(bc);
+                locals[i] = new VerificationTypeInfo(bc, constantPoolNode);
             }
             frame = "APPEND";
         } else if (frameType == SameFrameType.FULL_FRAME) {
@@ -63,12 +66,12 @@ public class StackMapFrame implements ClassNode {
             numberOfLocals = ByteUtils.bytesToInt(bc.next(2));
             locals = new VerificationTypeInfo[numberOfLocals];
             for (int i = 0; i < locals.length; i++) {
-                locals[i] = new VerificationTypeInfo(bc);
+                locals[i] = new VerificationTypeInfo(bc, constantPoolNode);
             }
             numberOfStackItems = ByteUtils.bytesToInt(bc.next(2));
             stack = new VerificationTypeInfo[numberOfStackItems];
             for (int i = 0; i < stack.length; i++) {
-                stack[i] = new VerificationTypeInfo(bc);
+                stack[i] = new VerificationTypeInfo(bc, constantPoolNode);
             }
             frame = "FULL_FRAME";
         }
@@ -83,8 +86,32 @@ public class StackMapFrame implements ClassNode {
         logger.info("frameType:{},offsetDelta:{}, numberOfLocals:{}, numberOfStackItems:{}", frameType, offsetDelta, numberOfLocals, numberOfStackItems);
     }
 
-    @Override
-    public void accept(Reader reader) {
-        reader.read(this);
+
+    public void getLog(StringBuilder stringBuilder) {
+        stringBuilder.append("\t").append(frame).append("\n");
+        if (numberOfLocals > 0) {
+            stringBuilder.append("\t\tnumberOfLocals\t").append(numberOfLocals).append("\n");
+            for (VerificationTypeInfo local : locals) {
+                local.getLog(stringBuilder);
+            }
+        }
+        Formatter formatter = new Formatter();
+        if (frameType == SameFrameType.SAME_LOCALS_1_STACK_ITEM_EXTENDED ||
+                (frameType >= SameFrameType.CHOP_MIN && frameType <= SameFrameType.CHOP_MAX) ||
+                frameType == SameFrameType.SAME_FRAME_EXTENDED ||
+                frameType >= SameFrameType.APPEND_MIN && frameType <= SameFrameType.APPEND_MAX ||
+                frameType == SameFrameType.FULL_FRAME
+        ) {
+            formatter.format("\t\toffsetDelta\t%d\t\n", offsetDelta);
+        }
+        stringBuilder.append(formatter);
+
+        if (numberOfStackItems > 0) {
+            stringBuilder.append("\t\tnumberOfStackItems\t").append(numberOfStackItems).append("\n");
+            for (VerificationTypeInfo local : stack) {
+                local.getLog(stringBuilder);
+            }
+        }
+        stringBuilder.append("\n");
     }
 }

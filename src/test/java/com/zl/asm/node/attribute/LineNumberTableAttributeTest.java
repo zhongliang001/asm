@@ -15,7 +15,7 @@ class LineNumberTableAttributeTest {
         LineNumberTableAttribute lineNumberTableAttribute = new LineNumberTableAttribute(byteContainer, 1);
         int lineNumberTableLength = lineNumberTableAttribute.getLineNumberTableLength();
         assertEquals(2, lineNumberTableLength);
-        LineNumberTable[] lineNumberTables = lineNumberTableAttribute.getLineNumbeTables();
+        LineNumberTable[] lineNumberTables = lineNumberTableAttribute.getLineNumberTables();
         assertEquals(2, lineNumberTables.length);
     }
 

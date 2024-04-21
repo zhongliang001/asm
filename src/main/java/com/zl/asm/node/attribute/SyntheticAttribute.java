@@ -19,6 +19,12 @@ public class SyntheticAttribute extends Attribute {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        stringBuilder.append("\tSyntheticAttribute\n");
+    }
+
+
+    @Override
     public void log(Logger log, boolean isParent) {
 
     }

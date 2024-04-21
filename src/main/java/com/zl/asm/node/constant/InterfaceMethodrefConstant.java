@@ -23,7 +23,10 @@ public class InterfaceMethodrefConstant extends ConstantNode {
 
     private int endIndex;
 
-    public InterfaceMethodrefConstant(ByteContainer bc, int tag, int index) {
+    private ConstantPoolNode constantPoolNode;
+
+    public InterfaceMethodrefConstant(ByteContainer bc, ConstantPoolNode constantPoolNode, int tag, int index) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         this.index = index;
         this.tag = tag;
@@ -32,7 +35,7 @@ public class InterfaceMethodrefConstant extends ConstantNode {
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
-            logger.debug("MethodConstant code:{}", bc.copy(startIndex, endIndex));
+            logger.debug("InterfaceMethodrefConstant code:{}", bc.copy(startIndex, endIndex));
         }
     }
 
@@ -40,7 +43,7 @@ public class InterfaceMethodrefConstant extends ConstantNode {
     public void log(Logger logger, boolean isParent) {
         if (isParent) {
             Formatter formatter = new Formatter();
-            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, MethodConstant.class.getSimpleName(), classIndex, nameAndTypeIndex);
+            formatter.format("|%03d|\t|%s|\t|%03d|\t|%03d|", index, InterfaceMethodrefConstant.class.getSimpleName(), classIndex, nameAndTypeIndex);
             logger.info("{}", formatter);
         } else {
             logger.info("index:{}, tag:{}, classIndex:{},name_and_type_index:{}", index, tag, classIndex, nameAndTypeIndex);
@@ -49,11 +52,16 @@ public class InterfaceMethodrefConstant extends ConstantNode {
 
     @Override
     public void getLog(StringBuilder stringBuilder) {
-
+        Formatter formatter = new Formatter();
+        formatter.format("\t|%03d|\t|%s|\t#%03d.#%03d\n", index, InterfaceMethodrefConstant.class.getSimpleName(), classIndex, nameAndTypeIndex);
+        stringBuilder.append(formatter);
     }
 
     @Override
     public String getValue() {
-        return null;
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode nameConstantNode = constantNodes[classIndex - 1];
+        ConstantNode constantNode = constantNodes[nameAndTypeIndex - 1];
+        return nameConstantNode.getValue() + "--" + constantNode.getValue();
     }
 }

@@ -6,6 +6,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class TypePath {
 
     private final Logger logger = LoggerFactory.getLogger(TypePath.class);
@@ -44,6 +46,15 @@ public class TypePath {
         log.info("pathLength: {}", pathLength);
         for (PathTable pathTable : pathTables) {
             pathTable.log(log, isParent);
+        }
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t\t\tpathLength\t%d\n", pathLength);
+        stringBuilder.append(formatter);
+        for (PathTable pathTable : pathTables) {
+            pathTable.getLog(stringBuilder);
         }
     }
 }

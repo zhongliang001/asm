@@ -10,13 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ModuleConstantTest {
     static byte[] bytes = new byte[]{0, 20};
 
-    static ByteContainer byteContainer = new ByteContainer(bytes);
-    static ModuleConstant moduleConstant = new ModuleConstant(byteContainer, ConstantKind.CONSTANT_Module_info, 1);
+    static ByteContainer byteContainer;
+    static ModuleConstant moduleConstant;
 
     @BeforeAll
     public static void init() {
         byteContainer = new ByteContainer(bytes);
-        moduleConstant = new ModuleConstant(byteContainer, ConstantKind.CONSTANT_Module_info, 1);
+        //TODO constantPoolNode
+        moduleConstant = new ModuleConstant(byteContainer, null, ConstantKind.CONSTANT_Module_info, 1);
     }
 
     @Test

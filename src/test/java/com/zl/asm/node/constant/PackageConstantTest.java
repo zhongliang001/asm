@@ -15,7 +15,8 @@ class PackageConstantTest {
     @BeforeAll
     public static void init() {
         byteContainer = new ByteContainer(bytes);
-        packageConstant = new PackageConstant(byteContainer, ConstantKind.CONSTANT_Package_info, 1);
+        // TODO constantPoolNode
+        packageConstant = new PackageConstant(byteContainer, null, ConstantKind.CONSTANT_Package_info, 1);
     }
 
     @Test

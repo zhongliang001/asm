@@ -12,7 +12,8 @@ class ArrayValueTest {
     @Test
     public void test() {
         ByteContainer bc = new ByteContainer(bytes);
-        ArrayValue arrayValue = new ArrayValue(bc);
+        //TODO constantPoolNode
+        ArrayValue arrayValue = new ArrayValue(bc, null);
         int numValues = arrayValue.getNumValues();
         assertEquals(1, numValues);
         ElementValue[] elementValues = arrayValue.getElementValues();

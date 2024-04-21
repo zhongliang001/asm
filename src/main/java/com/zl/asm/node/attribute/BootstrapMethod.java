@@ -1,15 +1,15 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class BootstrapMethod implements ClassNode {
+public class BootstrapMethod {
 
     private final Logger logger = LoggerFactory.getLogger(BootstrapMethod.class);
 
@@ -23,7 +23,10 @@ public class BootstrapMethod implements ClassNode {
 
     private int endIndex;
 
-    public BootstrapMethod(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public BootstrapMethod(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         bootstrapMethodRef = ByteUtils.bytesToInt(bc.next(2));
         numBootstrapArguments = ByteUtils.bytesToInt(bc.next(2));
@@ -57,8 +60,14 @@ public class BootstrapMethod implements ClassNode {
         logger.info("bootstrapArguments:{}", bootstrapArguments);
     }
 
-    @Override
-    public void accept(Reader reader) {
-
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[bootstrapMethodRef - 1];
+        formatter.format("\tbootstrapMethodRef\t%s\tnumBootstrapArguments\t%d\n", constantNode.getValue(), numBootstrapArguments);
+        for (int bootstrapArgument : bootstrapArguments) {
+            formatter.format("\t\t%s\n", constantNodes[bootstrapArgument - 1].getValue());
+        }
+        stringBuilder.append(formatter);
     }
 }

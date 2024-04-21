@@ -8,6 +8,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class CodeAttribute extends Attribute {
 
     private final Logger logger = LoggerFactory.getLogger(CodeAttribute.class);
@@ -35,7 +37,7 @@ public class CodeAttribute extends Attribute {
         exceptionTableLength = ByteUtils.bytesToInt(bc.next(2));
         exceptionNodes = new ExceptionNode[exceptionTableLength];
         for (int i = 0; i < exceptionNodes.length; i++) {
-            exceptionNodes[i] = new ExceptionNode(bc);
+            exceptionNodes[i] = new ExceptionNode(bc, constantPoolNode);
         }
         attributesCount = ByteUtils.bytesToInt(bc.next(2));
         attributes = new Attribute[attributesCount];
@@ -83,6 +85,21 @@ public class CodeAttribute extends Attribute {
 
     public byte[] getCode() {
         return code;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tmaxStack\t%d\tmaxLocals\t%d\n\tcodeLength\t%d\n", maxStack, maxLocals, codeLength);
+        formatter.format("\tcodeHex\t%s\n", ByteUtils.toHexString(code));
+        formatter.format("\texceptionTableLength\t%d\n", exceptionTableLength);
+        stringBuilder.append(formatter);
+        for (ExceptionNode exceptionNode : exceptionNodes) {
+            exceptionNode.getLog(stringBuilder);
+        }
+        for (Attribute attributeVisitor : attributes) {
+            attributeVisitor.getLog(stringBuilder);
+        }
     }
 
     @Override

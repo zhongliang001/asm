@@ -3,15 +3,15 @@ package com.zl.asm.node.attribute;
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.AccessFlag;
 import com.zl.asm.node.AccessFlagType;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class Require implements ClassNode {
+public class Require {
 
     private final Logger logger = LoggerFactory.getLogger(Require.class);
 
@@ -25,12 +25,15 @@ public class Require implements ClassNode {
 
     private int endIndex;
 
-    public Require(ByteContainer byteContainer) {
+    private ConstantPoolNode constantPoolNode;
+
+    public Require(ByteContainer byteContainer, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = byteContainer.getIndex();
         requiresIndex = ByteUtils.bytesToInt(byteContainer.next(2));
         requiresFlags = new AccessFlag(byteContainer, AccessFlagType.MODULE_ACCESS_FLAG_1);
         requiresVersionIndex = ByteUtils.bytesToInt(byteContainer.next(2));
-        ;
+
         endIndex = byteContainer.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
@@ -44,8 +47,16 @@ public class Require implements ClassNode {
         log.info("{}", formatter);
     }
 
-    @Override
-    public void accept(Reader reader) {
-
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[requiresIndex - 1];
+        formatter.format("\t\t\trequires\t%s\trequiresFlags\t%s\t", constantNode.getValue(), requiresFlags.getAccessStr());
+        if (requiresVersionIndex > 0) {
+            ConstantNode requireVersionConstantNode = constantNodes[requiresVersionIndex - 1];
+            formatter.format("version\t%s", requireVersionConstantNode.getValue());
+        }
+        formatter.format("\n");
+        stringBuilder.append(formatter);
     }
 }

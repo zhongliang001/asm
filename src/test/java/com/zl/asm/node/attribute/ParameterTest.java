@@ -16,7 +16,8 @@ class ParameterTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        Parameter parameter = new Parameter(byteContainer);
+        // TODO constantPoolNode
+        Parameter parameter = new Parameter(byteContainer, null);
         int nameIndex = parameter.getNameIndex();
         assertEquals(29, nameIndex);
         AccessFlag accessFlag = parameter.getAccessFlag();

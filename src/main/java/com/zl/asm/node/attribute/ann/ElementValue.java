@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +28,18 @@ public class ElementValue {
 
     private int endIndex;
 
-    public ElementValue(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public ElementValue(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         tag = (char) bc.next();
         if (tag == 'e') {
-            enumConstValue = new EnumConstValue(bc);
+            enumConstValue = new EnumConstValue(bc, constantPoolNode);
         } else if (tag == '@') {
-            annotation = new Annotation(bc);
+            annotation = new Annotation(bc, constantPoolNode);
         } else if (tag == '[') {
-            arrayValue = new ArrayValue(bc);
+            arrayValue = new ArrayValue(bc, constantPoolNode);
         } else if (tag == 'c') {
             classInfoIndex = ByteUtils.bytesToInt(bc.next(2));
         } else {
@@ -85,5 +90,25 @@ public class ElementValue {
         } else {
             formatter.format("constValueIndex: |%03d|", constValueIndex);
         }
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        if (tag == 'e') {
+            enumConstValue.getLog(stringBuilder);
+        } else if (tag == '@') {
+            annotation.getLog(stringBuilder);
+        } else if (tag == '[') {
+            arrayValue.getLog(stringBuilder);
+        } else if (tag == 'c') {
+            ConstantNode constantNode = constantNodes[classInfoIndex - 1];
+            formatter.format("\t\t\tclassName\t%s\n", constantNode.getValue());
+        } else {
+            ConstantNode consConstantNode = constantNodes[constValueIndex - 1];
+            formatter.format("\t\t\tconsName\t%s\n", consConstantNode.getValue());
+        }
+        stringBuilder.append(formatter);
+
     }
 }

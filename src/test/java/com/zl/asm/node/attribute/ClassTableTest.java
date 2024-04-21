@@ -13,7 +13,8 @@ class ClassTableTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        ClassTable classTable = new ClassTable(byteContainer);
+        //TODO constantPoolNode
+        ClassTable classTable = new ClassTable(byteContainer, null);
         assertEquals(22, classTable.getInnerClassInfoIndex());
         assertEquals(18, classTable.getOuterClassInfoIndex());
         assertEquals(23, classTable.getInnerNameIndex());

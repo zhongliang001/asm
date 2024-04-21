@@ -13,7 +13,8 @@ class ParameterAnnotationTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        ParameterAnnotation parameterAnnotation = new ParameterAnnotation(byteContainer);
+        //TODO constantPoolNode
+        ParameterAnnotation parameterAnnotation = new ParameterAnnotation(byteContainer, null);
         int numAnnotations = parameterAnnotation.getNumAnnotations();
         assertEquals(1, numAnnotations);
         Annotation[] annotations = parameterAnnotation.getAnnotations();

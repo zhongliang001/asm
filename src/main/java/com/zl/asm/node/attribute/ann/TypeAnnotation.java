@@ -2,6 +2,8 @@ package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.attribute.LocalVarTarget;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +46,10 @@ public class TypeAnnotation {
 
     private int endIndex;
 
-    public TypeAnnotation(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public TypeAnnotation(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         targetType = ByteUtils.toHexString(bc.next(1));
         if ("00".equals(targetType) || "01".equals(targetType)) {
@@ -76,7 +81,7 @@ public class TypeAnnotation {
         numElementValuePairs = ByteUtils.bytesToInt(bc.next(2));
         elementValuePairs = new ElementValuePair[numElementValuePairs];
         for (int i = 0; i < elementValuePairs.length; i++) {
-            elementValuePairs[i] = new ElementValuePair(bc);
+            elementValuePairs[i] = new ElementValuePair(bc, constantPoolNode);
         }
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
@@ -168,6 +173,41 @@ public class TypeAnnotation {
         log.info("{},numElementValuePairs: {}", formatter, numElementValuePairs);
         for (ElementValuePair elementValuePair : elementValuePairs) {
             elementValuePair.log(log, true);
+        }
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t");
+        if ("00".equals(targetType) || "01".equals(targetType)) {
+            formatter.format("typeParameterTarget\t%d\t", typeParameterTarget);
+        } else if ("10".equals(targetType)) {
+            formatter.format("supertypeTarget\t%d\t", supertypeTarget);
+        } else if ("11".equals(targetType) || "12".equals(targetType)) {
+            typeParameterBoundTarget.getLog(stringBuilder);
+        } else if ("16".equals(targetType)) {
+            formatter.format("formalParameterTarget\t%d\t", formalParameterTarget);
+        } else if ("17".equals(targetType)) {
+            formatter.format("throwsTarget\t%d\t", throwsTarget);
+        } else if ("40".equals(targetType) || "41".equals(targetType)) {
+            localVarTarget.getLog(stringBuilder);
+        } else if ("42".equals(targetType)) {
+            formatter.format("catchTarget\t%d\t", catchTarget);
+        } else if (Arrays.asList(new String[]{"43", "44", "45", "46"}).contains(targetType)) {
+            formatter.format("offsetTarget\t%d\t", offsetTarget);
+        } else if (Arrays.asList(new String[]{"47", "48", "49", "4A", "4B"}).contains(targetType)) {
+            typeArgumentTarget.getLog(stringBuilder);
+        }
+        typePath.getLog(stringBuilder);
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        if (typeIndex > 0) {
+            ConstantNode constantNode = constantNodes[typeIndex - 1];
+            formatter.format("typeIndex: %s\t", constantNode.getValue());
+        }
+        formatter.format("numElementValuePairs\t%d\n", numElementValuePairs);
+        stringBuilder.append(formatter);
+        for (ElementValuePair elementValuePair : elementValuePairs) {
+            elementValuePair.getLog(stringBuilder);
         }
     }
 }

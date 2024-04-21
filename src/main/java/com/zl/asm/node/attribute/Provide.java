@@ -1,15 +1,15 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class Provide implements ClassNode {
+public class Provide {
 
     private final Logger logger = LoggerFactory.getLogger(Provide.class);
     private int providesIndex;
@@ -21,7 +21,10 @@ public class Provide implements ClassNode {
 
     private int endIndex;
 
-    public Provide(ByteContainer byteContainer) {
+    private ConstantPoolNode constantPoolNode;
+
+    public Provide(ByteContainer byteContainer, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = byteContainer.getIndex();
         providesIndex = ByteUtils.bytesToInt(byteContainer.next(2));
         providesWithCount = ByteUtils.bytesToInt(byteContainer.next(2));
@@ -57,8 +60,16 @@ public class Provide implements ClassNode {
         log.info("{}", formatter);
     }
 
-    @Override
-    public void accept(Reader reader) {
-
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[providesIndex - 1];
+        formatter.format("\t\t\tprovides\t%s\tprovidesCount\t%d\n\t\t\t\t", constantNode.getValue(), providesWithCount);
+        for (int toIndex : providesWithIndex) {
+            ConstantNode indexConstantNode = constantNodes[toIndex - 1];
+            formatter.format("%s\t", indexConstantNode.getValue());
+        }
+        formatter.format("\n");
+        stringBuilder.append(formatter);
     }
 }

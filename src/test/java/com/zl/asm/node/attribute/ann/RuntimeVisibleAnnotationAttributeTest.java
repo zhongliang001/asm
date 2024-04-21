@@ -12,7 +12,8 @@ class RuntimeVisibleAnnotationAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        RuntimeVisibleAnnotationAttribute attribute = new RuntimeVisibleAnnotationAttribute(byteContainer, 1);
+        //TODO constantPoolNode
+        RuntimeVisibleAnnotationAttribute attribute = new RuntimeVisibleAnnotationAttribute(byteContainer, null, 1);
         int numAnnotations = attribute.getNumAnnotations();
         assertEquals(1, numAnnotations);
         Annotation[] annotations = attribute.getAnnotations();

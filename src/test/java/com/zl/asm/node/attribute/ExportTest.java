@@ -14,7 +14,9 @@ class ExportTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        Export export = new Export(byteContainer);
+
+        //TODO constantPoolNode
+        Export export = new Export(byteContainer, null);
         AccessFlag exportsFlags = export.getExportsFlags();
         assertArrayEquals(new String[]{}, exportsFlags.getAccessFlags().toArray());
         int exportsIndex = export.getExportsIndex();

@@ -41,4 +41,10 @@ public class PathTable {
         formatter.format("typePathKind: %d, typeArgumentIndex: |%03d|", typePathKind, typeArgumentIndex);
         log.info("{}", formatter);
     }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t\t\t\ttypePathKind\t%d\ttypeArgumentIndex\t%d\n", typePathKind, typeArgumentIndex);
+        stringBuilder.append(formatter);
+    }
 }

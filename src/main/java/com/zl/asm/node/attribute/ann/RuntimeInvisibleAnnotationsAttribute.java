@@ -2,9 +2,12 @@ package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.attribute.Attribute;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Formatter;
 
 public class RuntimeInvisibleAnnotationsAttribute extends Attribute {
 
@@ -15,12 +18,14 @@ public class RuntimeInvisibleAnnotationsAttribute extends Attribute {
 
     private int endIndex;
 
-    public RuntimeInvisibleAnnotationsAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public RuntimeInvisibleAnnotationsAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
         numAnnotations = ByteUtils.bytesToInt(bc.next(2));
         annotations = new Annotation[numAnnotations];
         for (int i = 0; i < annotations.length; i++) {
-            annotations[i] = new Annotation(bc);
+            annotations[i] = new Annotation(bc, constantPoolNode);
         }
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
@@ -35,6 +40,16 @@ public class RuntimeInvisibleAnnotationsAttribute extends Attribute {
 
     public Annotation[] getAnnotations() {
         return annotations;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\tRuntimeInvisibleAnnotationsAttribute\tnumAnnotations\t%d\n", numAnnotations);
+        stringBuilder.append(formatter);
+        for (Annotation annotation : annotations) {
+            annotation.getLog(stringBuilder);
+        }
     }
 
     @Override

@@ -42,4 +42,10 @@ public class TypeArgumentTarget {
         log.info("{}", formatter);
 
     }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t\t\toffset\t%d\ttypeArgumentIndex\t%d\n", offset, typeArgumentIndex);
+        stringBuilder.append(formatter);
+    }
 }

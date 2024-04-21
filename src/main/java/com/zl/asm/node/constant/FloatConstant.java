@@ -42,7 +42,7 @@ public class FloatConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return value;
+        return String.valueOf(fValue);
     }
 
     @Override

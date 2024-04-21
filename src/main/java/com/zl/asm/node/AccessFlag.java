@@ -49,6 +49,10 @@ public class AccessFlag implements ClassNode {
         return accessFlags;
     }
 
+    public String getAccessStr() {
+        return String.join(",", accessFlags);
+    }
+
     @Override
     public void accept(Reader reader) {
         reader.read(this);

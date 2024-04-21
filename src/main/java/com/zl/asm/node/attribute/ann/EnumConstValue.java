@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,10 @@ public class EnumConstValue {
 
     private int endIndex;
 
-    public EnumConstValue(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public EnumConstValue(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         typeNameIndex = ByteUtils.bytesToInt(bc.next(2));
         consNameIndex = ByteUtils.bytesToInt(bc.next(2));
@@ -41,5 +46,14 @@ public class EnumConstValue {
         Formatter formatter = new Formatter();
         formatter.format("typeNameIndex:|%03d|, consNameIndex: |%03d|", typeNameIndex, consNameIndex);
         log.info("{}", formatter);
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode typeConstantNode = constantNodes[typeNameIndex - 1];
+        ConstantNode consConstantNode = constantNodes[consNameIndex - 1];
+        formatter.format("\t\t\ttypeName\t%s\tconsName\t%s\n", typeConstantNode.getValue(), consConstantNode.getValue());
+        stringBuilder.append(formatter);
     }
 }

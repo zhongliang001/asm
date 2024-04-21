@@ -50,7 +50,7 @@ public class DoubleConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return null;
+        return String.valueOf(dValue);
     }
 
 }

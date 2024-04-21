@@ -1,15 +1,15 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class LocalVariableTable implements ClassNode {
+public class LocalVariableTable {
 
     private final Logger logger = LoggerFactory.getLogger(LocalVariableTable.class);
 
@@ -23,7 +23,10 @@ public class LocalVariableTable implements ClassNode {
 
     private int endIndex;
 
-    public LocalVariableTable(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public LocalVariableTable(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         this.startIndex = bc.getIndex();
         this.startPc = ByteUtils.bytesToInt(bc.next(2));
         this.length = ByteUtils.bytesToInt(bc.next(2));
@@ -52,8 +55,12 @@ public class LocalVariableTable implements ClassNode {
     }
 
 
-    @Override
-    public void accept(Reader reader) {
-
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode nameConstantNode = constantNodes[nameIndex - 1];
+        ConstantNode descripConstantNode = constantNodes[descriptorIndex - 1];
+        formatter.format("\t\tstartPc\t%d\tlineNumber\t%d\tname\t%s\t\ttype\t%s\tindex\t%d\n", startPc, length, nameConstantNode.getValue(), descripConstantNode.getValue(), index);
+        stringBuilder.append(formatter);
     }
 }

@@ -12,7 +12,8 @@ class AnnotationDefaultAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        AnnotationDefaultAttribute attribute = new AnnotationDefaultAttribute(byteContainer, 1);
+        // TODO constantPoolNode
+        AnnotationDefaultAttribute attribute = new AnnotationDefaultAttribute(byteContainer, null, 1);
         ElementValue elementValue = attribute.getElementValue();
         char tag = elementValue.getTag();
         assertEquals('I', tag);

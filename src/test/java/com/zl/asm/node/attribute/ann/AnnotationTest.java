@@ -12,7 +12,8 @@ class AnnotationTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        Annotation annotation = new Annotation(byteContainer);
+        // TODO constantPoolNode
+        Annotation annotation = new Annotation(byteContainer, null);
         int typeIndex = annotation.getTypeIndex();
         assertEquals(21, typeIndex);
     }

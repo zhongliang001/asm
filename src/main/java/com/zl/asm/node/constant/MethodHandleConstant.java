@@ -20,8 +20,11 @@ public class MethodHandleConstant extends ConstantNode {
 
     private int endIndex;
 
+    private ConstantPoolNode constantPoolNode;
 
-    public MethodHandleConstant(ByteContainer bc, int tag, int index) {
+
+    public MethodHandleConstant(ByteContainer bc, ConstantPoolNode constantPoolNode, int tag, int index) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         this.tag = tag;
         this.index = index;
@@ -55,7 +58,8 @@ public class MethodHandleConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return null;
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        return constantNodes[referenceIndex - 1].getValue();
     }
 
     @Override

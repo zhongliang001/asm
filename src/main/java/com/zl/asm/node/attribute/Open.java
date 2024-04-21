@@ -3,15 +3,15 @@ package com.zl.asm.node.attribute;
 import com.zl.asm.ByteContainer;
 import com.zl.asm.node.AccessFlag;
 import com.zl.asm.node.AccessFlagType;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Formatter;
 
-public class Open implements ClassNode {
+public class Open {
 
     private final Logger logger = LoggerFactory.getLogger(Open.class);
     private int opensIndex;
@@ -26,7 +26,10 @@ public class Open implements ClassNode {
 
     private int endIndex;
 
-    public Open(ByteContainer byteContainer) {
+    private ConstantPoolNode constantPoolNode;
+
+    public Open(ByteContainer byteContainer, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = byteContainer.getIndex();
         opensIndex = ByteUtils.bytesToInt(byteContainer.next(2));
         opensFlags = new AccessFlag(byteContainer, AccessFlagType.MODULE_ACCESS_FLAG_1);
@@ -51,8 +54,16 @@ public class Open implements ClassNode {
         log.info("{}", formatter);
     }
 
-    @Override
-    public void accept(Reader reader) {
-
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[opensIndex - 1];
+        formatter.format("\t\t\topens\t%s\topensFlag\t%s\topensToCount\t%d\n\t\t\t\t", constantNode.getValue(), opensFlags.getAccessStr(), opensToCount);
+        for (int toIndex : opensToIndex) {
+            ConstantNode indexConstantNode = constantNodes[toIndex - 1];
+            formatter.format("%s\t", indexConstantNode.getValue());
+        }
+        formatter.format("\n");
+        stringBuilder.append(formatter);
     }
 }

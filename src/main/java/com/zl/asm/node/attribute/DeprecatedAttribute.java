@@ -20,6 +20,11 @@ public class DeprecatedAttribute extends Attribute {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        stringBuilder.append("DeprecatedAttribute\n");
+    }
+
+    @Override
     public void log(Logger log, boolean isParent) {
 
     }

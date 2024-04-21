@@ -10,7 +10,13 @@ public abstract class HelloWorld implements Cloneable, TestIn {
 
     private final int intval2 = 10;
 
-    public void test() throws IOException {
+    private final float ff = 1.0f;
+
+    private final double dd = 1d;
+
+    private final String str = "s";
+
+    public void test1(int in) throws IOException {
         int a = 1;
         int b = 2;
         int c = a + b;

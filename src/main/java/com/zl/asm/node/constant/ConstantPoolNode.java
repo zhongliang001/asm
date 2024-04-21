@@ -50,19 +50,19 @@ public class ConstantPoolNode implements ClassNode {
                     constantNodes[i - 1] = new FieldConstant(bc, ConstantKind.CONSTANT_Fieldref, i);
                     break;
                 case ConstantKind.CONSTANT_Methodref:
-                    constantNodes[i - 1] = new MethodConstant(bc, ConstantKind.CONSTANT_Methodref, i);
+                    constantNodes[i - 1] = new MethodConstant(bc, this, ConstantKind.CONSTANT_Methodref, i);
                     break;
                 case ConstantKind.CONSTANT_Class:
-                    constantNodes[i - 1] = new ClassConstant(bc, ConstantKind.CONSTANT_Class, i);
+                    constantNodes[i - 1] = new ClassConstant(bc, this, ConstantKind.CONSTANT_Class, i);
                     break;
                 case ConstantKind.CONSTANT_String:
-                    constantNodes[i - 1] = new StringConstant(bc, ConstantKind.CONSTANT_String, i);
+                    constantNodes[i - 1] = new StringConstant(bc, this, ConstantKind.CONSTANT_String, i);
                     break;
                 case ConstantKind.CONSTANT_InterfaceMethodref:
-                    constantNodes[i - 1] = new InterfaceMethodrefConstant(bc, ConstantKind.CONSTANT_InterfaceMethodref, i);
+                    constantNodes[i - 1] = new InterfaceMethodrefConstant(bc, this, ConstantKind.CONSTANT_InterfaceMethodref, i);
                     break;
                 case ConstantKind.CONSTANT_NameAndType:
-                    constantNodes[i - 1] = new NameAndTypeConstant(bc, ConstantKind.CONSTANT_NameAndType, i);
+                    constantNodes[i - 1] = new NameAndTypeConstant(bc, this, ConstantKind.CONSTANT_NameAndType, i);
                     break;
                 case ConstantKind.CONSTANT_Dynamic_info:
                     constantNodes[i - 1] = new DynamicConstant(bc, ConstantKind.CONSTANT_Dynamic_info, i);
@@ -71,16 +71,16 @@ public class ConstantPoolNode implements ClassNode {
                     constantNodes[i - 1] = new DynamicConstant(bc, ConstantKind.CONSTANT_InvokeDynamic_info, i);
                     break;
                 case ConstantKind.CONSTANT_MethodHandle_info:
-                    constantNodes[i - 1] = new MethodHandleConstant(bc, ConstantKind.CONSTANT_MethodHandle_info, i);
+                    constantNodes[i - 1] = new MethodHandleConstant(bc, this, ConstantKind.CONSTANT_MethodHandle_info, i);
                     break;
                 case ConstantKind.CONSTANT_MethodType_info:
-                    constantNodes[i - 1] = new MethodTypeConstant(bc, ConstantKind.CONSTANT_MethodType_info, i);
+                    constantNodes[i - 1] = new MethodTypeConstant(bc, this, ConstantKind.CONSTANT_MethodType_info, i);
                     break;
                 case ConstantKind.CONSTANT_Module_info:
-                    constantNodes[i - 1] = new ModuleConstant(bc, ConstantKind.CONSTANT_Module_info, i);
+                    constantNodes[i - 1] = new ModuleConstant(bc, this, ConstantKind.CONSTANT_Module_info, i);
                     break;
                 case ConstantKind.CONSTANT_Package_info:
-                    constantNodes[i - 1] = new PackageConstant(bc, ConstantKind.CONSTANT_Package_info, i);
+                    constantNodes[i - 1] = new PackageConstant(bc, this, ConstantKind.CONSTANT_Package_info, i);
                     break;
                 case ConstantKind.CONSTANT_Long:
                     constantNodes[i - 1] = new LongConstant(bc, ConstantKind.CONSTANT_Long, i);
@@ -102,7 +102,7 @@ public class ConstantPoolNode implements ClassNode {
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger);
-            logger.debug("ConstanPooledNodeCode:{}", bc.copy(startIndex, endIndex));
+            logger.debug("ConstantPooledNodeCode:{}", bc.copy(startIndex, endIndex));
         }
 
     }

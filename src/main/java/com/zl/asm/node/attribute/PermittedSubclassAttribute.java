@@ -17,8 +17,11 @@ public class PermittedSubclassAttribute extends Attribute {
 
     private int endIndex;
 
+    private ByteContainer bc;
+
     public PermittedSubclassAttribute(ByteContainer bc, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.bc = bc;
         numberOfClasses = ByteUtils.bytesToInt(bc.next(2));
         classes = new int[numberOfClasses];
         for (int i = 0; i < classes.length; i++) {
@@ -37,6 +40,14 @@ public class PermittedSubclassAttribute extends Attribute {
 
     public int[] getClasses() {
         return classes;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tPermittedSubclassAttribute\tHexcode\t%s\n",
+                ByteUtils.toHexString(bc.copy(startIndex, endIndex)));
+        stringBuilder.append(formatter);
     }
 
     @Override

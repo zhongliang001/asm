@@ -13,7 +13,8 @@ class StackMapTableAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        StackMapTableAttribute stackMapTableAttribute = new StackMapTableAttribute(byteContainer, 1);
+        // TODO 需要constantPoolNode
+        StackMapTableAttribute stackMapTableAttribute = new StackMapTableAttribute(byteContainer, null, 1);
         int numberOfEntries = stackMapTableAttribute.getNumberOfEntries();
         assertEquals(20, numberOfEntries);
         StackMapFrame[] stackMapFrames = stackMapTableAttribute.getStackMapFrames();

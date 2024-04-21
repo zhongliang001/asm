@@ -12,7 +12,8 @@ class ElementValuePairTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        ElementValuePair elementValuePair = new ElementValuePair(byteContainer);
+        // TODO constantPoolNode
+        ElementValuePair elementValuePair = new ElementValuePair(byteContainer, null);
         int elementNameIndex = elementValuePair.getElementNameIndex();
         assertEquals(52, elementNameIndex);
         ElementValue value = elementValuePair.getValue();

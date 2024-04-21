@@ -12,7 +12,8 @@ class RuntimeInvisibleTypeAnnAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        RuntimeInvisibleTypeAnnAttribute runtimeInvisibleTypeAnnAttribute = new RuntimeInvisibleTypeAnnAttribute(byteContainer, 1);
+        //TODO constantPoolNode
+        RuntimeInvisibleTypeAnnAttribute runtimeInvisibleTypeAnnAttribute = new RuntimeInvisibleTypeAnnAttribute(byteContainer, null, 1);
         int numAnnotations = runtimeInvisibleTypeAnnAttribute.getNumAnnotations();
         assertEquals(1, numAnnotations);
         assertEquals(numAnnotations, runtimeInvisibleTypeAnnAttribute.getTypeAnnotations().length);

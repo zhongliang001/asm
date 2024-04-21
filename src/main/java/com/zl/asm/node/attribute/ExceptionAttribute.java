@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,11 @@ public class ExceptionAttribute extends Attribute {
 
     private int endIndex;
 
-    public ExceptionAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public ExceptionAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.constantPoolNode = constantPoolNode;
         numberOfExceptions = ByteUtils.bytesToInt(bc.next(2));
         exceptionIndexTable = new int[numberOfExceptions];
         for (int i = 0; i < exceptionIndexTable.length; i++) {
@@ -29,6 +34,19 @@ public class ExceptionAttribute extends Attribute {
             log(logger, false);
             logger.info("ExceptionAttribute code:{}", bc.copy(startIndex, endIndex));
         }
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tnumberOfExceptions\t%s\n", numberOfExceptions);
+        for (int i : exceptionIndexTable) {
+            ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+            ConstantNode exceptionIndexTable = constantNodes[i - 1];
+            formatter.format("\texceptionIndexTable:%s\n", exceptionIndexTable.getValue());
+
+        }
+        stringBuilder.append(formatter);
     }
 
     @Override

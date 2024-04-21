@@ -12,7 +12,8 @@ class EnumConstValueTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        EnumConstValue enumConstValue = new EnumConstValue(byteContainer);
+        // TODO constantPoolNode
+        EnumConstValue enumConstValue = new EnumConstValue(byteContainer, null);
         int typeNameIndex = enumConstValue.getTypeNameIndex();
         assertEquals(75, typeNameIndex);
         int consNameIndex = enumConstValue.getConsNameIndex();

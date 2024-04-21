@@ -1,9 +1,13 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Formatter;
 
 public class EnclosingMethodAttribute extends Attribute {
 
@@ -14,8 +18,11 @@ public class EnclosingMethodAttribute extends Attribute {
 
     private int endIndex;
 
-    public EnclosingMethodAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public EnclosingMethodAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.constantPoolNode = constantPoolNode;
         classIndex = ByteUtils.bytesToInt(bc.next(2));
         methodIndex = ByteUtils.bytesToInt(bc.next(2));
         endIndex = bc.getIndex() - 1;
@@ -31,6 +38,19 @@ public class EnclosingMethodAttribute extends Attribute {
 
     public int getMethodIndex() {
         return methodIndex;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[classIndex - 1];
+        formatter.format("\t\tEnclosingMethodAttribute\tclass\t%s", constantNode.getValue());
+        if (methodIndex > 1) {
+            ConstantNode methodConstantNode = constantNodes[methodIndex - 1];
+            formatter.format("\tmethod\t%s", methodConstantNode.getValue());
+        }
+        stringBuilder.append(formatter).append("\n");
     }
 
     @Override

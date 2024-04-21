@@ -1,10 +1,11 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Formatter;
 
 public class LineNumberTableAttribute extends Attribute {
 
@@ -32,8 +33,18 @@ public class LineNumberTableAttribute extends Attribute {
         return lineNumberTableLength;
     }
 
-    public LineNumberTable[] getLineNumbeTables() {
+    public LineNumberTable[] getLineNumberTables() {
         return lineNumberTables;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tlineNumberTableLength\t%d\n", lineNumberTableLength);
+        stringBuilder.append(formatter);
+        for (LineNumberTable lineNumberTable : lineNumberTables) {
+            lineNumberTable.getLog(stringBuilder);
+        }
     }
 
     @Override
@@ -41,13 +52,6 @@ public class LineNumberTableAttribute extends Attribute {
         log.info("lineNumberTableLength:{}", lineNumberTableLength);
         for (LineNumberTable lineNumberTable : lineNumberTables) {
             lineNumberTable.log(log, isParent);
-        }
-    }
-
-    public void accept(Reader reader) {
-        reader.read(this);
-        for (LineNumberTable lineNumberTable : lineNumberTables) {
-            lineNumberTable.accept(reader);
         }
     }
 

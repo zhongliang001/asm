@@ -63,12 +63,21 @@ public class ClassInfo implements ClassNode {
     }
 
     @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("classInfo:\n\tthisClass\t#%03d\n\tsuperClass\t#%03d\n\tinterfaceCount\t%d\n\tinterFaces", thisClass, superClass, interfaceCount);
+        for (int i = 0; i < interFaces.length; i++) {
+            formatter.format("\t#%03d", interFaces[i]);
+        }
+        stringBuilder.append(formatter).append("\n");
+    }
+
+    @Override
     public void log(Logger logger) {
         accessFlag.log(logger, true);
         Formatter formatter = new Formatter();
         formatter.format("thisClass:%03d,superClass:%03d,interfaceCount:%03d", thisClass, superClass, interfaceCount);
         logger.info("{},interFaces:{}", formatter, interFaces);
-
     }
 
     @Override

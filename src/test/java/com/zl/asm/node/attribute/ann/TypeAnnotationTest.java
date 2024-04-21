@@ -13,7 +13,8 @@ class TypeAnnotationTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        TypeAnnotation annotation = new TypeAnnotation(byteContainer);
+        //TODO constantPoolNode
+        TypeAnnotation annotation = new TypeAnnotation(byteContainer, null);
         String targetType = annotation.getTargetType();
         assertEquals("11", targetType);
         TypeParameterBoundTarget typeParameterBoundTarget = annotation.getTypeParameterBoundTarget();

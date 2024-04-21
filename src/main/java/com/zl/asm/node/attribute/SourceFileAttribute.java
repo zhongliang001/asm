@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,11 @@ public class SourceFileAttribute extends Attribute {
 
     private int endIndex;
 
-    public SourceFileAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public SourceFileAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.constantPoolNode = constantPoolNode;
         this.sourcefileIndex = ByteUtils.bytesToInt(bc.next(2));
         this.endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
@@ -27,6 +32,14 @@ public class SourceFileAttribute extends Attribute {
     public int getSourcefileIndex() {
         return sourcefileIndex;
     }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[sourcefileIndex - 1];
+        stringBuilder.append("\t").append(constantNode.getValue()).append("\n");
+    }
+
 
     @Override
     public void log(Logger log, boolean isParent) {

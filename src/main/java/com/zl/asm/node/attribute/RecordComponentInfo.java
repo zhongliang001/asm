@@ -21,7 +21,10 @@ public class RecordComponentInfo {
 
     private int endIndex;
 
+    private ConstantPoolNode constantPoolNode;
+
     public RecordComponentInfo(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         nameIndex = ByteUtils.bytesToInt(bc.next(2));
         descriptorIndex = ByteUtils.bytesToInt(bc.next(2));
@@ -65,5 +68,17 @@ public class RecordComponentInfo {
             attribute.log(log, isParent);
         }
 
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode nameConstantNode = constantNodes[nameIndex - 1];
+        ConstantNode descriConstantNode = constantNodes[descriptorIndex - 1];
+        formatter.format("\t\tname\t%s\tdescriptorIndex\t%s\tattributesCount:\t%d\n", nameConstantNode.getValue(), descriConstantNode.getValue(), attributesCount);
+        stringBuilder.append(formatter);
+        for (Attribute attribute : attributes) {
+            attribute.getLog(stringBuilder);
+        }
     }
 }

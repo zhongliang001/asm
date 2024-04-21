@@ -1,15 +1,13 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
-import com.zl.asm.node.ClassNode;
-import com.zl.asm.reader.Reader;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 
-public abstract class Attribute implements ClassNode {
+public abstract class Attribute {
 
-    public int attributeNameIndex;
-    public int attributeLength;
+    protected int attributeNameIndex;
+    protected int attributeLength;
 
     protected int startIndex;
 
@@ -19,9 +17,11 @@ public abstract class Attribute implements ClassNode {
         this.attributeLength = ByteUtils.bytesToInt(bc.next(4));
     }
 
+    public abstract void getLog(StringBuilder stringBuilder);
+
     public abstract void log(Logger log, boolean isParent);
 
-    public void accept(Reader reader) {
-        reader.read(this);
+    public void log(Logger logger) {
     }
+
 }

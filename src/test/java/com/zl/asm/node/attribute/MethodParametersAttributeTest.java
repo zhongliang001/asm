@@ -12,7 +12,8 @@ class MethodParametersAttributeTest {
     @Test
     public void test() {
         ByteContainer bc = new ByteContainer(bytes);
-        MethodParametersAttribute attribute = new MethodParametersAttribute(bc, 1);
+        //TODO constantPoolNode
+        MethodParametersAttribute attribute = new MethodParametersAttribute(bc, null, 1);
         int parametersCount = attribute.getParametersCount();
         assertEquals(1, parametersCount);
         assertEquals(parametersCount, attribute.getParameters().length);

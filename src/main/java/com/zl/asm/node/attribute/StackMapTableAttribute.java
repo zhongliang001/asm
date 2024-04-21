@@ -1,10 +1,13 @@
 package com.zl.asm.node.attribute;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.node.stack.StackMapFrame;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Formatter;
 
 public class StackMapTableAttribute extends Attribute {
 
@@ -16,12 +19,15 @@ public class StackMapTableAttribute extends Attribute {
 
     private int endIndex;
 
-    public StackMapTableAttribute(ByteContainer bc, int attributeNameIndex) {
+    private ConstantPoolNode constantPoolNode;
+
+    public StackMapTableAttribute(ByteContainer bc, ConstantPoolNode constantPoolNode, int attributeNameIndex) {
         super(bc, attributeNameIndex);
+        this.constantPoolNode = constantPoolNode;
         numberOfEntries = ByteUtils.bytesToInt(bc.next(2));
         stackMapFrames = new StackMapFrame[numberOfEntries];
         for (int i = 0; i < numberOfEntries; i++) {
-            stackMapFrames[i] = new StackMapFrame(bc);
+            stackMapFrames[i] = new StackMapFrame(bc, constantPoolNode);
         }
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
@@ -36,6 +42,16 @@ public class StackMapTableAttribute extends Attribute {
 
     public StackMapFrame[] getStackMapFrames() {
         return stackMapFrames;
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\tnumberStackMapFrames\t%d\n", numberOfEntries);
+        stringBuilder.append(formatter);
+        for (StackMapFrame stackMapFrame : stackMapFrames) {
+            stackMapFrame.getLog(stringBuilder);
+        }
     }
 
     @Override

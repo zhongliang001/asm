@@ -12,7 +12,8 @@ class LocalVariableTableAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        LocalVariableTableAttribute localVariableTableAttribute = new LocalVariableTableAttribute(byteContainer, 1);
+        // TODO
+        LocalVariableTableAttribute localVariableTableAttribute = new LocalVariableTableAttribute(byteContainer, null, 1);
         int localVariableTableLength = localVariableTableAttribute.getLocalVariableTableLength();
         assertEquals(1, localVariableTableLength);
         LocalVariableTable[] localVariableTables = localVariableTableAttribute.getLocalVariableTables();

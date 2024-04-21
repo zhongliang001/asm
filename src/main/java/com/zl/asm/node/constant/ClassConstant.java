@@ -20,7 +20,10 @@ public class ClassConstant extends ConstantNode {
 
     private int endIndex;
 
-    public ClassConstant(ByteContainer bc, int tag, int index) {
+    private ConstantPoolNode constantPoolNode;
+
+    public ClassConstant(ByteContainer bc, ConstantPoolNode constantPoolNode, int tag, int index) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         this.index = index;
         this.tag = tag;
@@ -51,6 +54,8 @@ public class ClassConstant extends ConstantNode {
 
     @Override
     public String getValue() {
-        return null;
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode nameConstantNode = constantNodes[classIndex - 1];
+        return nameConstantNode.getValue();
     }
 }

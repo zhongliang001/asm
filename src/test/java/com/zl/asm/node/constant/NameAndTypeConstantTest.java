@@ -10,13 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class NameAndTypeConstantTest {
     static byte[] bytes = new byte[]{0, 12, 0, 13};
 
-    static ByteContainer byteContainer = new ByteContainer(bytes);
-    static NameAndTypeConstant constant = new NameAndTypeConstant(byteContainer, ConstantKind.CONSTANT_NameAndType, 1);
+    static ByteContainer byteContainer;
+    static NameAndTypeConstant constant;
 
     @BeforeAll
     public static void init() {
         byteContainer = new ByteContainer(bytes);
-        constant = new NameAndTypeConstant(byteContainer, ConstantKind.CONSTANT_NameAndType, 1);
+        //TODO constantPoolNode
+        constant = new NameAndTypeConstant(byteContainer, null, ConstantKind.CONSTANT_NameAndType, 1);
     }
 
     @Test

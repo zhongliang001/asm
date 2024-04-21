@@ -1,6 +1,8 @@
 package com.zl.asm.node.attribute.ann;
 
 import com.zl.asm.ByteContainer;
+import com.zl.asm.node.constant.ConstantNode;
+import com.zl.asm.node.constant.ConstantPoolNode;
 import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +21,13 @@ public class ElementValuePair {
 
     private int endIndex;
 
-    public ElementValuePair(ByteContainer bc) {
+    private ConstantPoolNode constantPoolNode;
+
+    public ElementValuePair(ByteContainer bc, ConstantPoolNode constantPoolNode) {
+        this.constantPoolNode = constantPoolNode;
         startIndex = bc.getIndex();
         elementNameIndex = ByteUtils.bytesToInt(bc.next(2));
-        value = new ElementValue(bc);
+        value = new ElementValue(bc, constantPoolNode);
         endIndex = bc.getIndex() - 1;
         if (logger.isDebugEnabled()) {
             log(logger, false);
@@ -43,5 +48,15 @@ public class ElementValuePair {
         formatter.format("elementNameIndex:|%03d|", elementNameIndex);
         log.info("{}", formatter);
         value.log(log, true);
+    }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        ConstantNode[] constantNodes = constantPoolNode.getConstantNodes();
+        ConstantNode constantNode = constantNodes[elementNameIndex - 1];
+        formatter.format("\t\telementNameIndex\t%s\t\n", constantNode.getValue());
+        stringBuilder.append(formatter);
+        value.getLog(stringBuilder);
+
     }
 }

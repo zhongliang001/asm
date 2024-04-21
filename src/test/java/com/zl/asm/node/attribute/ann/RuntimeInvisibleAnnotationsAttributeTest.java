@@ -12,7 +12,8 @@ class RuntimeInvisibleAnnotationsAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        RuntimeInvisibleAnnotationsAttribute runtimeInvisibleAnnotationsAttribute = new RuntimeInvisibleAnnotationsAttribute(byteContainer, 1);
+        // TODO constantPoolNode
+        RuntimeInvisibleAnnotationsAttribute runtimeInvisibleAnnotationsAttribute = new RuntimeInvisibleAnnotationsAttribute(byteContainer, null, 1);
         int numAnnotations = runtimeInvisibleAnnotationsAttribute.getNumAnnotations();
         assertEquals(1, numAnnotations);
         assertEquals(numAnnotations, runtimeInvisibleAnnotationsAttribute.getAnnotations().length);

@@ -13,7 +13,8 @@ class BootstrapMethodAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        BootstrapMethodAttribute bootstrapMethodAttribute = new BootstrapMethodAttribute(byteContainer, 1);
+        // TODO constantPoolNode
+        BootstrapMethodAttribute bootstrapMethodAttribute = new BootstrapMethodAttribute(byteContainer, null, 1);
         int numBootstrapMethods = bootstrapMethodAttribute.getNumBootstrapMethods();
         assertEquals(1, numBootstrapMethods);
         BootstrapMethod[] bootstrapMethods = bootstrapMethodAttribute.getBootstrapMethods();

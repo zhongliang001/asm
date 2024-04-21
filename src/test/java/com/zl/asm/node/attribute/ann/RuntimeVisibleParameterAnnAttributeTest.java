@@ -12,7 +12,8 @@ class RuntimeVisibleParameterAnnAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        RuntimeVisibleParameterAnnAttribute attribute = new RuntimeVisibleParameterAnnAttribute(byteContainer, 1);
+        //TODO constantPoolNode
+        RuntimeVisibleParameterAnnAttribute attribute = new RuntimeVisibleParameterAnnAttribute(byteContainer, null, 1);
         int numParameters = attribute.getNumParameters();
         assertEquals(1, numParameters);
         assertEquals(numParameters, attribute.getParameterAnnotations().length);

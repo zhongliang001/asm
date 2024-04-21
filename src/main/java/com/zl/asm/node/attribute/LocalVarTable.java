@@ -52,4 +52,10 @@ public class LocalVarTable {
         log.info("{}", formatter);
 
     }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t\t\tstartPc\t%d\tlength\t%d\tindex\t%d\n", startPc, length, index);
+        stringBuilder.append(formatter);
+    }
 }

@@ -12,7 +12,8 @@ class ElementValueTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        ElementValue elementValue = new ElementValue(byteContainer);
+        //TODO constantPoolNode
+        ElementValue elementValue = new ElementValue(byteContainer, null);
         char tag = elementValue.getTag();
         assertEquals('s', tag);
     }

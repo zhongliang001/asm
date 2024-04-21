@@ -12,7 +12,8 @@ class EnclosingMethodAttributeTest {
     @Test
     public void test() {
         ByteContainer byteContainer = new ByteContainer(bytes);
-        EnclosingMethodAttribute enclosingMethodAttribute = new EnclosingMethodAttribute(byteContainer, 1);
+        // TODO constantPoolNode
+        EnclosingMethodAttribute enclosingMethodAttribute = new EnclosingMethodAttribute(byteContainer, null, 1);
         int methodIndex = enclosingMethodAttribute.getMethodIndex();
         int classIndex = enclosingMethodAttribute.getClassIndex();
         assertEquals(29, methodIndex);

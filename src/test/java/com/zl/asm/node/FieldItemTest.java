@@ -25,7 +25,7 @@ class FieldItemTest {
         assertEquals(8, descriptorIndex);
         int attributesCount = fieldItem.getAttributesCount();
         assertEquals(1, attributesCount);
-        Attribute[] attributeVisitors = fieldItem.getAttributeVisitors();
+        Attribute[] attributeVisitors = fieldItem.getAttributes();
         assertEquals(1, attributeVisitors.length);
     }
 }

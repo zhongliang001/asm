@@ -42,4 +42,10 @@ public class TypeParameterBoundTarget {
         formatter.format("typeParameterIndex: |%03d|,boundIndex: |%03d| ", typeParameterIndex, boundIndex);
         log.info("{}", formatter);
     }
+
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("\t\t\t\ttypeParameterIndex\t%d\tboundIndex\t%d\n ", typeParameterIndex, boundIndex);
+        stringBuilder.append(formatter);
+    }
 }

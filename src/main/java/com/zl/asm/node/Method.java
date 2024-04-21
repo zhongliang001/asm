@@ -7,6 +7,8 @@ import com.zl.asm.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Formatter;
+
 public class Method implements ClassNode {
 
     private final Logger logger = LoggerFactory.getLogger(Method.class);
@@ -46,6 +48,18 @@ public class Method implements ClassNode {
         log.info("methodNum:{}", methodNum);
         for (MethodItem methodItemVisitor : methodItem) {
             methodItemVisitor.log(log, true);
+        }
+    }
+
+    @Override
+    public void getLog(StringBuilder stringBuilder) {
+        Formatter formatter = new Formatter();
+        formatter.format("methodNum\t%d\n", methodNum);
+        stringBuilder.append(formatter);
+        int i = 1;
+        for (MethodItem item : methodItem) {
+            stringBuilder.append("Method:").append(i++).append("\n");
+            item.getLog(stringBuilder);
         }
     }
 
